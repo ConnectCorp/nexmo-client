@@ -1,0 +1,25 @@
+{
+  "name"       : "connect-corp/nexmo-client",
+  "version"    : "0.0.1",
+  "homepage" : "https://github.com/ConnectCorp/nexmo-client",
+  "description": "Unofficial Nexmo Rest Client",
+  "keywords"   : [
+    "nexmo",
+    "sdk",
+    "lib"
+  ],
+  "license"    : "MIT",
+  "type"       : "library",
+  "require"    : {
+    "php": ">=5.4.0",
+    "guzzlehttp/guzzle": "~5.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4.5"
+  },
+  "autoload"   : {
+    "psr-4": {
+      "Nexmo\\": "src/"
+    }
+  }
+}
