@@ -21,7 +21,7 @@ class Client
     /**
      * @var string
      */
-    private $baseUrl = 'https://rest.nexmo.com';
+    private $baseUrl = 'https://api.nexmo.com';
 
     /**
      * @var Message
@@ -46,7 +46,7 @@ class Client
     {
         $this->client = new HttpClient([
             'base_url' => $this->baseUrl,
-            'options' => [
+            'defaults' => [
                 'query' => [
                     'api_key' => $apiKey,
                     'api_secret' => $apiSecret
