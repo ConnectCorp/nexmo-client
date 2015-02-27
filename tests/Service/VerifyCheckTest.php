@@ -7,7 +7,7 @@ class VerifyCheckTest extends PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $this->service = $this->getMockBuilder('TestVerifyCheck')->setMethods(['exec'])->setConstructorArgs([$client])->getMock();
+        $this->service = $this->getMockBuilder('VerifyCheckMock')->setMethods(['exec'])->setConstructorArgs([$client])->getMock();
     }
 
     public function testInvoke()
@@ -22,9 +22,9 @@ class VerifyCheckTest extends PHPUnit_Framework_TestCase
         $this->service->invoke('req_id', '1234', '0.0.0.0');
     }
 
-    public function testGetPath()
+    public function testGetEndpoint()
     {
-        $this->assertEquals($this->service->getPath(), '/verify/check/json');
+        $this->assertEquals($this->service->getEndpoint(), 'https://api.nexmo.com/verify/check/json');
     }
 
     public function testValidateResponseStatusProperty()
@@ -57,7 +57,7 @@ class VerifyCheckTest extends PHPUnit_Framework_TestCase
 }
 
 
-class TestVerifyCheck extends \Nexmo\Service\VerifyCheck
+class VerifyCheckMock extends \Nexmo\Service\VerifyCheck
 {
     public function testValidateResponse($params)
     {

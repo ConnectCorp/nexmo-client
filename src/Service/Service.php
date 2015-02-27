@@ -16,6 +16,8 @@ abstract class Service
      */
     protected $client;
 
+    protected $baseUrl;
+
     /**
      * @param Client $client
      */
@@ -27,7 +29,7 @@ abstract class Service
     /**
      * @return string
      */
-    abstract public function getPath();
+    abstract public function getEndpoint();
 
     /**
      * @return mixed
@@ -42,13 +44,14 @@ abstract class Service
 
     /**
      * @param $params
-     * @return mixed
+     * @throws Exception
+     * @return array
      */
     protected function exec($params)
     {
         $params = array_filter($params);
 
-        $response = $this->client->get($this->getPath(), [
+        $response = $this->client->get($this->getEndpoint(), [
             'query' => $params
         ]);
 

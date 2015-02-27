@@ -28,9 +28,9 @@ class Verify extends Service
     /**
      * @return string
      */
-    public function getPath()
+    public function getEndpoint()
     {
-        return '/verify/json';
+        return 'https://api.nexmo.com/verify/json';
     }
 
     /**

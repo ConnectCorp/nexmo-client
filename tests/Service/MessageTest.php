@@ -32,9 +32,9 @@ class MessageTest extends PHPUnit_Framework_TestCase
         $this->service->invoke(5005550000, 5005551111, 'text', 'message', 'status_rep_req', 'client_ref', 'net_code', 'vcard', 'vcal', 1, 'class', 'body', 'udh');
     }
 
-    public function testGetPath()
+    public function testGetEndpoint()
     {
-        $this->assertEquals($this->service->getPath(), '/sms/json');
+        $this->assertEquals($this->service->getEndpoint(), 'https://rest.nexmo.com/sms/json');
     }
 
     public function testValidateResponseMessageCountProperty()

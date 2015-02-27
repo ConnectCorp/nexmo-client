@@ -10,11 +10,11 @@ class VoiceTest extends PHPUnit_Framework_TestCase
         $service->invoke();
     }
 
-    public function testGetPath()
+    public function testGetEndpoint()
     {
         $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
         $service = new \Nexmo\Service\Voice($client);
-        $this->assertEquals($service->getPath(), '/voice/json');
+        $this->assertEquals($service->getEndpoint(), 'https://rest.nexmo.com/call/json');
     }
 
     public function testValidateResponse()

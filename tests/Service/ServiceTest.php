@@ -30,7 +30,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase
         )->willReturn($response);
 
 
-        $service = $this->getMockBuilder('TestService')->setMethods(['validateResponse'])->setConstructorArgs([
+        $service = $this->getMockBuilder('ServiceMock')->setMethods(['validateResponse'])->setConstructorArgs([
             $client
         ])->getMock();
 
@@ -51,7 +51,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase
 
         $client->method('get')->willReturn($response);
 
-        $service = $this->getMockBuilder('TestService')->setMethods(['validateResponse'])->setConstructorArgs([
+        $service = $this->getMockBuilder('ServiceMock')->setMethods(['validateResponse'])->setConstructorArgs([
             $client
         ])->getMock();
 
@@ -64,7 +64,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase
     {
         $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
 
-        $service = $this->getMockBuilder('TestService')->setMethods(['invoke'])->setConstructorArgs([
+        $service = $this->getMockBuilder('ServiceMock')->setMethods(['invoke'])->setConstructorArgs([
             $client
         ])->getMock();
 
@@ -80,7 +80,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase
     {
         $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
 
-        $service = $this->getMockBuilder('TestService')->setMethods(['invoke'])->setConstructorArgs([
+        $service = $this->getMockBuilder('ServiceMock')->setMethods(['invoke'])->setConstructorArgs([
             $client
         ])->getMock();
 
@@ -88,12 +88,12 @@ class ServiceTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class TestService extends \Nexmo\Service\Service
+class ServiceMock extends \Nexmo\Service\Service
 {
     /**
      * @return string
      */
-    public function getPath()
+    public function getEndpoint()
     {
         return 'path';
     }
