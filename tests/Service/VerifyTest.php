@@ -30,6 +30,20 @@ class VerifyTest extends PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Nexmo\Service\VerifyCheck', $this->service->check);
     }
 
+    public function testNumberParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$number parameter cannot be blank');
+        $this->service->invoke();
+    }
+
+
+    public function testBrandParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$brand parameter cannot be blank');
+        $this->service->invoke(5005550000);
+    }
+
+
     public function testGetEndpoint()
     {
         $this->assertEquals($this->service->getEndpoint(), 'https://api.nexmo.com/verify/json');

@@ -20,13 +20,22 @@ class VerifyCheck extends Service
     }
 
     /**
-     * @param $requestId
-     * @param $code
-     * @param null $ipAddress
-     * @return mixed
+     * @param string $requestId
+     * @param string $code
+     * @param string $ipAddress
+     * @throws Exception
+     * @return array
      */
     public function invoke($requestId = null, $code = null, $ipAddress = null)
     {
+        if(!$requestId) {
+            throw new Exception("\$requestId parameter cannot be blank");
+        }
+
+        if(!$code) {
+            throw new Exception("\$code parameter cannot be blank");
+        }
+
         return $this->exec([
             'request_id' => $requestId,
             'code' => $code,

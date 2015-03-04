@@ -34,16 +34,25 @@ class Verify extends Service
     }
 
     /**
-     * @param $number
-     * @param $brand
+     * @param string $number
+     * @param string $brand
      * @param string $senderId
      * @param integer $codeLength
      * @param string $lg
      * @param string $requireType
+     * @throws Exception
      * @return array
      */
     public function invoke($number = null, $brand = null, $senderId = null, $codeLength = null, $lg = null, $requireType = null)
     {
+        if(!$number) {
+            throw new Exception("\$number parameter cannot be blank");
+        }
+
+        if(!$brand) {
+            throw new Exception("\$brand parameter cannot be blank");
+        }
+
         return $this->exec([
             'number' => $number,
             'brand' => $brand,

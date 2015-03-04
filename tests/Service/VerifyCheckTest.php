@@ -27,6 +27,19 @@ class VerifyCheckTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->service->getEndpoint(), 'https://api.nexmo.com/verify/check/json');
     }
 
+    public function testRequestIdParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$requestId parameter cannot be blank');
+        $this->service->invoke();
+    }
+
+
+    public function testCodeParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$code parameter cannot be blank');
+        $this->service->invoke('request_id');
+    }
+
     public function testValidateResponseStatusProperty()
     {
         $this->setExpectedException('\Nexmo\Exception', 'status property expected');

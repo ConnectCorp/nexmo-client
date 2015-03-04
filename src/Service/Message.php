@@ -3,6 +3,7 @@
 namespace Nexmo\Service;
 
 use Nexmo\Exception as NexmoException;
+use Nexmo\Exception;
 
 /**
  * Class Message
@@ -32,6 +33,7 @@ class Message extends Service
      * @param string $messageClass
      * @param string $body
      * @param string $udh
+     * @throws Exception
      * @return array
      */
     public function invoke(
@@ -50,6 +52,18 @@ class Message extends Service
         $udh = null
     )
     {
+        if(!$from) {
+            throw new Exception("\$from parameter cannot be blank");
+        }
+
+        if(!$to) {
+            throw new Exception("\$to parameter cannot be blank");
+        }
+
+        if(!$text) {
+            throw new Exception("\$text parameter cannot be blank");
+        }
+
         return $this->exec([
             'from' => $from,
             'to' => $to,

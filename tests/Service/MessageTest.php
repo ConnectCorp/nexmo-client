@@ -37,6 +37,25 @@ class MessageTest extends PHPUnit_Framework_TestCase
         $this->assertEquals($this->service->getEndpoint(), 'https://rest.nexmo.com/sms/json');
     }
 
+    public function testFromParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$from parameter cannot be blank');
+        $this->service->invoke();
+    }
+
+
+    public function testToParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$to parameter cannot be blank');
+        $this->service->invoke(5005550000);
+    }
+
+    public function testTextParameterRequired()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$text parameter cannot be blank');
+        $this->service->invoke(5005550000, 5005550001);
+    }
+
     public function testValidateResponseMessageCountProperty()
     {
         $this->setExpectedException('\Nexmo\Exception', 'message-count property expected');
