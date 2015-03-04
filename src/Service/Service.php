@@ -59,7 +59,7 @@ abstract class Service
 
         $json = json_decode($body, true);
         if (json_last_error()) {
-            throw new Exception('Cannot parse JSON: ' . json_last_error_msg());
+            throw new Exception('Unable to parse JSON');
         }
 
         $this->validateResponse($json);
