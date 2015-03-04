@@ -55,7 +55,7 @@ class ServiceTest extends PHPUnit_Framework_TestCase
             $client
         ])->getMock();
 
-        $this->setExpectedException('\Nexmo\Exception', 'Cannot parse JSON');
+        $this->setExpectedException('\Nexmo\Exception', 'Unable to parse JSON');
 
         $service->testExec([]);
     }
