@@ -3,13 +3,16 @@
 namespace Nexmo;
 
 use GuzzleHttp\Client as HttpClient;
-use Nexmo\Service\Account;
-use Nexmo\Service\Message;
-use Nexmo\Service\Verify;
-use Nexmo\Service\Voice;
+use Nexmo\Service;
 
 /**
  * Class Client
+ *
+ * @property Service\Account $account Account management APIs
+ * @property Service\Message $message
+ * @property Service\Voice   $voice
+ * @property Service\Verify  $verify
+ *
  * @package Nexmo\Client
  */
 class Client
@@ -17,27 +20,12 @@ class Client
     /**
      * @var HttpClient
      */
-    private $client;
+    protected $client;
 
     /**
-     * @var Message
+     * @var Service\Service[]
      */
-    public $message;
-
-    /**
-     * @var Voice
-     */
-    public $voice;
-
-    /**
-     * @var Verify
-     */
-    public $verify;
-
-    /**
-     * @var Account
-     */
-    protected $account;
+    protected $services = [];
 
     /**
      * @param string $apiKey
@@ -53,17 +41,14 @@ class Client
                 ]
             ]
         ]);
-
-        $this->voice = new Voice($this->client);
-        $this->verify = new Verify($this->client);
-        $this->message = new Message($this->client);
     }
 
-    public function account()
+    public function __get($name)
     {
-        if (!$this->account) {
-            $this->account = new Account($this->client);
+        if (!isset($this->services[$name])) {
+            $cls = '\\Nexmo\\Service\\' . ucfirst($name);
+            $this->services[$name] = new $cls($this->client);
         }
-        return $this->account;
+        return $this->services[$name];
     }
 }
