@@ -3,6 +3,7 @@
 namespace Nexmo;
 
 use GuzzleHttp\Client as HttpClient;
+use Nexmo\Service\Account;
 use Nexmo\Service\Message;
 use Nexmo\Service\Verify;
 use Nexmo\Service\Voice;
@@ -34,6 +35,11 @@ class Client
     public $verify;
 
     /**
+     * @var Account
+     */
+    protected $account;
+
+    /**
      * @param string $apiKey
      * @param string $apiSecret
      */
@@ -51,5 +57,13 @@ class Client
         $this->voice = new Voice($this->client);
         $this->verify = new Verify($this->client);
         $this->message = new Message($this->client);
+    }
+
+    public function account()
+    {
+        if (!$this->account) {
+            $this->account = new Account($this->client);
+        }
+        return $this->account;
     }
 }
