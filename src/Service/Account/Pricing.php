@@ -49,9 +49,6 @@ class Pricing extends Service
             if (!isset($network['mtPrice'])) {
                 throw new Exception('network.mtPrice property expected');
             }
-            if (!isset($network['ranges']) || !is_array($network['ranges'])) {
-                throw new Exception('network.ranges array property expected');
-            }
         }
         return true;
     }
