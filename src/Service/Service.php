@@ -2,30 +2,14 @@
 
 namespace Nexmo\Service;
 
-use GuzzleHttp\Client;
 use Nexmo\Exception;
 
 /**
  * Class Service
  * @package Nexmo\Service
  */
-abstract class Service
+abstract class Service extends Resource
 {
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    protected $baseUrl;
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     /**
      * @return string
      */

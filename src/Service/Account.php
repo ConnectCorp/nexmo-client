@@ -13,7 +13,7 @@ use Nexmo\Exception;
  * @property-read Account\InternationalPricing $internationalPricing
  * @property-read Account\PhonePricing         $phonePricing
  */
-class Account extends ServiceCollection
+class Account extends ResourceCollection
 {
     protected function getNamespaceSuffix()
     {

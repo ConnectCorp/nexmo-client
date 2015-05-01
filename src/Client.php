@@ -4,7 +4,7 @@ namespace Nexmo;
 
 use GuzzleHttp\Client as HttpClient;
 use Nexmo\Service;
-use Nexmo\Service\ServiceCollection;
+use Nexmo\Service\ResourceCollection;
 
 /**
  * Class Client
@@ -16,9 +16,19 @@ use Nexmo\Service\ServiceCollection;
  *
  * @package Nexmo\Client
  */
-class Client extends ServiceCollection
+class Client extends ResourceCollection
 {
     const BASE_URL = 'https://rest.nexmo.com/';
+
+    /**
+     * @var string
+     */
+    private $apiKey;
+
+    /**
+     * @var string
+     */
+    private $apiSecret;
 
     /**
      * @param string $apiKey
@@ -26,20 +36,34 @@ class Client extends ServiceCollection
      */
     public function __construct($apiKey, $apiSecret)
     {
-        $client = new HttpClient([
-            'base_url' => static::BASE_URL,
-            'defaults' => [
-                'query' => [
-                    'api_key' => $apiKey,
-                    'api_secret' => $apiSecret
-                ]
-            ]
-        ]);
-        parent::__construct($client);
+        $this->apiKey = $apiKey;
+        $this->apiSecret = $apiSecret;
     }
 
     protected function getNamespaceSuffix()
     {
         return 'Service';
+    }
+
+    public function __get($name)
+    {
+        $this->loadClient();
+        return parent::__get($name);
+    }
+
+    protected function loadClient()
+    {
+        if ($this->client) {
+            return;
+        }
+        $this->client = new HttpClient([
+            'base_url' => static::BASE_URL,
+            'defaults' => [
+                'query' => [
+                    'api_key' => $this->apiKey,
+                    'api_secret' => $this->apiSecret
+                ]
+            ]
+        ]);
     }
 }

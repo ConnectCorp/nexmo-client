@@ -2,29 +2,19 @@
 
 namespace Nexmo\Service;
 
-use GuzzleHttp\Client;
+use Nexmo\Exception;
 
-abstract class ServiceCollection
+abstract class ResourceCollection extends Resource
 {
     /**
-     * @var Client
+     * @var Resource[]
      */
-    protected $client;
-
-    /**
-     * @var Service[]
-     */
-    protected $services = [];
+    protected $resources = [];
 
     /**
      * @var string
      */
     private $namespace;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
 
     abstract protected function getNamespaceSuffix();
 
@@ -41,13 +31,18 @@ abstract class ServiceCollection
 
     public function __get($name)
     {
-        if (!isset($this->services[$name])) {
+        if (!isset($this->resources[$name])) {
             if (!$this->namespace) {
                 $this->namespace = $this->getNamespace();
             }
-            $cls = $this->namespace . '\\' . ucfirst($name);
-            $this->services[$name] = new $cls($this->client);
+            $clsName = $this->namespace . '\\' . ucfirst($name);
+            $cls = new $clsName();
+            if (!$cls instanceof Resource) {
+                throw new Exception("Class $clsName is not a Nexmo Resource");
+            }
+            $cls->setClient($this->client);
+            $this->resources[$name] = $cls;
         }
-        return $this->services[$name];
+        return $this->resources[$name];
     }
 }
