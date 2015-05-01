@@ -2,47 +2,22 @@
 
 namespace Nexmo\Service;
 
-use GuzzleHttp\Client;
 use Nexmo\Exception;
 
-class Account
+/**
+ * Account management APIs
+ *
+ * @property-read Account\Balance              $balance
+ * @property-read Account\Numbers              $numbers
+ * @property-read Account\Pricing              $pricing
+ * @property-read Account\InternationalPricing $internationalPricing
+ * @property-read Account\PhonePricing         $phonePricing
+ */
+class Account extends ServiceCollection
 {
-    /**
-     * @var Account\Balance
-     */
-    protected $balance;
-
-    /**
-     * @var Account\Numbers
-     */
-    protected $numbers;
-
-    /**
-     * @var Account\Pricing
-     */
-    protected $pricing;
-
-    /**
-     * @var Account\InternationalPricing
-     */
-    protected $internationalPricing;
-
-    /**
-     * @var Account\PhonePricing
-     */
-    protected $phonePricing;
-
-    /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
-     * @param Client $client
-     */
-    public function __construct(Client $client)
+    protected function getNamespaceSuffix()
     {
-        $this->client = $client;
+        return 'Account';
     }
 
     /**
@@ -53,9 +28,6 @@ class Account
      */
     public function balance()
     {
-        if (!$this->balance) {
-            $this->balance = new Account\Balance($this->client);
-        }
         return $this->balance->invoke();
     }
 
@@ -74,9 +46,6 @@ class Account
      */
     public function numbers($index = 1, $size = 10, $pattern = null, $searchPattern = 0)
     {
-        if (!$this->numbers) {
-            $this->numbers = new Account\Numbers($this->client);
-        }
         return $this->numbers->invoke($index, $size, $pattern, $searchPattern);
     }
 
@@ -89,9 +58,6 @@ class Account
      */
     public function pricing($country)
     {
-        if (!$this->pricing) {
-            $this->pricing = new Account\Pricing($this->client);
-        }
         return $this->pricing->invoke($country);
     }
 
@@ -104,9 +70,6 @@ class Account
      */
     public function internationalPricing($prefix)
     {
-        if (!$this->internationalPricing) {
-            $this->internationalPricing = new Account\InternationalPricing($this->client);
-        }
         return $this->internationalPricing->invoke($prefix);
     }
 
@@ -120,9 +83,6 @@ class Account
      */
     public function phonePricing($product, $phone)
     {
-        if (!$this->phonePricing) {
-            $this->phonePricing = new Account\PhonePricing($this->client);
-        }
         return $this->phonePricing->invoke($product, $phone);
     }
 }
