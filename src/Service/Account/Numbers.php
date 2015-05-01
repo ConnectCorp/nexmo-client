@@ -9,7 +9,7 @@ class Numbers extends Service
 {
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/account/numbers';
+        return 'account/numbers';
     }
 
     public function invoke($index = 1, $size = 10, $pattern = null, $searchPattern = 0)

@@ -17,6 +17,8 @@ use Nexmo\Service;
  */
 class Client
 {
+    const BASE_URL = 'https://rest.nexmo.com/';
+
     /**
      * @var HttpClient
      */
@@ -34,6 +36,7 @@ class Client
     public function __construct($apiKey, $apiSecret)
     {
         $this->client = new HttpClient([
+            'base_url' => static::BASE_URL,
             'defaults' => [
                 'query' => [
                     'api_key' => $apiKey,

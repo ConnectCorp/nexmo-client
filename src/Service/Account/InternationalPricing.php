@@ -8,7 +8,7 @@ class InternationalPricing extends Pricing
 {
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/account/get-prefix-pricing/outbound';
+        return 'account/get-prefix-pricing/outbound';
     }
 
     public function invoke($prefix = null)

@@ -16,7 +16,7 @@ class Message extends Service
      */
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/sms/json';
+        return 'sms/json';
     }
 
     /**

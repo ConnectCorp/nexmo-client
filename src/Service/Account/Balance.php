@@ -9,7 +9,7 @@ class Balance extends Service
 {
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/account/get-balance';
+        return 'account/get-balance';
     }
 
     public function invoke()

@@ -11,7 +11,7 @@ class PhonePricing extends Service
 
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/account/get-phone-pricing/outbound/' . $this->product;
+        return 'account/get-phone-pricing/outbound/' . $this->product;
     }
 
     public function invoke($product = null, $phone = null)

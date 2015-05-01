@@ -9,7 +9,7 @@ class Pricing extends Service
 {
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/account/get-pricing/outbound';
+        return 'account/get-pricing/outbound';
     }
 
     public function invoke($country = null)
