@@ -11,8 +11,8 @@ use Nexmo\Exception;
  * @property-read Account\Balance              $balance
  * @property-read Account\Numbers              $numbers
  * @property-read Account\Pricing              $pricing
- * @property-read Account\InternationalPricing $internationalPricing
- * @property-read Account\PhonePricing         $phonePricing
+ * @property-read Account\PricingInternational $pricingInternational
+ * @property-read Account\PricingPhone         $pricingPhone
  */
 class Account extends ResourceCollection
 {
@@ -69,9 +69,9 @@ class Account extends ResourceCollection
      * @return Pricing[]
      * @throws Exception
      */
-    public function internationalPricing($prefix)
+    public function pricingInternational($prefix)
     {
-        return $this->internationalPricing->invoke($prefix);
+        return $this->pricingInternational->invoke($prefix);
     }
 
     /**
@@ -82,8 +82,8 @@ class Account extends ResourceCollection
      * @return array
      * @throws Exception
      */
-    public function phonePricing($product, $phone)
+    public function pricingPhone($product, $phone)
     {
-        return $this->phonePricing->invoke($product, $phone);
+        return $this->pricingPhone->invoke($product, $phone);
     }
 }

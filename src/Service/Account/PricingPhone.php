@@ -6,7 +6,7 @@ use Nexmo\Entity;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
-class PhonePricing extends Service
+class PricingPhone extends Service
 {
     protected $product;
 
@@ -24,7 +24,7 @@ class PhonePricing extends Service
             throw new Exception('$product parameter must be "sms" or "voice"');
         }
         $this->product = $product;
-        return new Entity\PhonePricing($this->exec([
+        return new Entity\PricingPhone($this->exec([
             'phone' => $phone,
         ]));
     }

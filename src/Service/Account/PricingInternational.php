@@ -5,7 +5,7 @@ namespace Nexmo\Service\Account;
 use Nexmo\Entity;
 use Nexmo\Exception;
 
-class InternationalPricing extends Pricing
+class PricingInternational extends Pricing
 {
     public function getEndpoint()
     {
