@@ -86,11 +86,6 @@ class ServiceMock extends Service
         return 'path';
     }
 
-    public function getClient()
-    {
-        return $this->client;
-    }
-
     public function testExec(array $params)
     {
         return $this->exec($params);
