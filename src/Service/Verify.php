@@ -2,6 +2,7 @@
 
 namespace Nexmo\Service;
 
+use GuzzleHttp\ClientInterface;
 use Nexmo\Exception;
 
 /**
@@ -15,14 +16,15 @@ class Verify extends Service
      */
     public $check;
 
-    /**
-     * @param \GuzzleHttp\Client $client
-     */
-    public function __construct($client)
+    public function __construct()
     {
-        parent::__construct($client);
+        $this->check = new VerifyCheck();
+    }
 
-        $this->check = new VerifyCheck($client);
+    public function setClient(ClientInterface $client)
+    {
+        parent::setClient($client);
+        $this->check->setClient($client);
     }
 
     /**
