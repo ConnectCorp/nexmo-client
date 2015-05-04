@@ -46,12 +46,12 @@ class Numbers extends Service
             if (!isset($number['moHttpUrl'])) {
                 throw new Exception('number.moHttpUrl property expected');
             }
-            if (!isset($number['voiceCallbackType'])) {
-                throw new Exception('number.voiceCallbackType property expected');
-            }
-            if (!isset($number['voiceCallbackValue'])) {
-                throw new Exception('number.voiceCallbackValue property expected');
-            }
+//            if (!isset($number['voiceCallbackType'])) {
+//                throw new Exception('number.voiceCallbackType property expected');
+//            }
+//            if (!isset($number['voiceCallbackValue'])) {
+//                throw new Exception('number.voiceCallbackValue property expected');
+//            }
         }
 
         return true;
