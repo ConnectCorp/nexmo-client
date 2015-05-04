@@ -34,9 +34,6 @@ class PricingPhone extends Service
         if (!isset($json['country-code'])) {
             throw new Exception('country-code property expected');
         }
-        if (!isset($json['network-code'])) {
-            throw new Exception('network-code property expected');
-        }
         if (!isset($json['phone'])) {
             throw new Exception('phone property expected');
         }

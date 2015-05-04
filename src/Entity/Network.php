@@ -5,6 +5,9 @@ class Network extends Collection
 {
     /**
      * Network operator MCCMNC
+     *
+     * @see http://en.wikipedia.org/wiki/Mobile_country_code
+     *
      * @return string|int
      */
     public function code()

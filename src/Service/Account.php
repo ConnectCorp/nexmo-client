@@ -2,7 +2,7 @@
 
 namespace Nexmo\Service;
 
-use Nexmo\Entity\Pricing;
+use Nexmo\Entity;
 use Nexmo\Exception;
 
 /**
@@ -54,7 +54,7 @@ class Account extends ResourceCollection
      * Retrieve Nexmo's outbound pricing for a given country.
      *
      * @param string $country A 2 letter country code. Ex: CA
-     * @return Pricing
+     * @return Entity\Pricing
      * @throws Exception
      */
     public function pricing($country)
@@ -66,7 +66,7 @@ class Account extends ResourceCollection
      * Retrieve Nexmo's outbound pricing for a given international prefix.
      *
      * @param int $prefix International dialing code. Ex: 44
-     * @return Pricing[]
+     * @return Entity\Pricing[]
      * @throws Exception
      */
     public function pricingInternational($prefix)
@@ -75,15 +75,26 @@ class Account extends ResourceCollection
     }
 
     /**
-     * Retrieve Nexmo's outbound pricing for a given phone number.
+     * Retrieve Nexmo's outbound voice pricing for a given phone number.
      *
-     * @param string $product "sms" or "voice"
-     * @param string $phone Phone number in international format Ex: 447525856424
-     * @return array
+     * @param string $number Phone number in international format Ex: 447525856424
+     * @return Entity\PricingPhone
      * @throws Exception
      */
-    public function pricingPhone($product, $phone)
+    public function pricingSms($number)
     {
-        return $this->pricingPhone->invoke($product, $phone);
+        return $this->pricingPhone->invoke('sms', $number);
+    }
+
+    /**
+     * Retrieve Nexmo's outbound SMS pricing for a given phone number.
+     *
+     * @param string $number Phone number in international format Ex: 447525856424
+     * @return Entity\PricingPhone
+     * @throws Exception
+     */
+    public function pricingVoice($number)
+    {
+        return $this->pricingPhone->invoke('voice', $number);
     }
 }
