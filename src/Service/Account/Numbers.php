@@ -2,6 +2,7 @@
 
 namespace Nexmo\Service\Account;
 
+use Nexmo\Entity\NumberCollection;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
@@ -14,12 +15,13 @@ class Numbers extends Service
 
     public function invoke($index = 1, $size = 10, $pattern = null, $searchPattern = 0)
     {
-        return $this->exec([
+        $size = min($size, 100);
+        return new NumberCollection($this->exec([
             'index' => $index,
             'size' => $size,
             'pattern' => $pattern,
             'search_pattern' => $searchPattern,
-        ]);
+        ]));
     }
 
     protected function validateResponse(array $json)
@@ -46,12 +48,6 @@ class Numbers extends Service
             if (!isset($number['moHttpUrl'])) {
                 throw new Exception('number.moHttpUrl property expected');
             }
-//            if (!isset($number['voiceCallbackType'])) {
-//                throw new Exception('number.voiceCallbackType property expected');
-//            }
-//            if (!isset($number['voiceCallbackValue'])) {
-//                throw new Exception('number.voiceCallbackValue property expected');
-//            }
         }
 
         return true;

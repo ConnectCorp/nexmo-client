@@ -42,7 +42,7 @@ class Account extends ResourceCollection
      *                                  0 = starts with
      *                                  1 = anywhere
      *                                  2 = ends with
-     * @return array
+     * @return Entity\NumberCollection|Entity\Number[]
      * @throws Exception
      */
     public function numbers($index = 1, $size = 10, $pattern = null, $searchPattern = 0)

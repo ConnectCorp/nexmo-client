@@ -28,6 +28,23 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
         return isset($this->data[$key]) ? $this->data[$key] : null;
     }
 
+    /**
+     * @param string        $key
+     * @param callable|null $callback
+     * @return array
+     */
+    public function getArray($key, callable $callback = null)
+    {
+        $list = $this->get($key);
+        if (!is_array($list)) {
+            return [];
+        }
+        if (is_callable($callback)) {
+            return array_map($callback, $list);
+        }
+        return $list;
+    }
+
     public function has($key)
     {
         return array_key_exists($key, $this->data);
