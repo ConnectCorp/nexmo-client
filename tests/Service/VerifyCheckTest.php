@@ -1,6 +1,9 @@
 <?php
 
-namespace Nexmo\Tests;
+namespace Nexmo\Tests\Service;
+
+use Nexmo\Service\VerifyCheck;
+use Nexmo\Tests\TestCase;
 
 class VerifyCheckTest extends TestCase
 {
@@ -72,7 +75,7 @@ class VerifyCheckTest extends TestCase
 }
 
 
-class VerifyCheckMock extends \Nexmo\Service\VerifyCheck
+class VerifyCheckMock extends VerifyCheck
 {
     public function testValidateResponse($params)
     {

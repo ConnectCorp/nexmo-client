@@ -1,6 +1,9 @@
 <?php
 
-namespace Nexmo\Tests;
+namespace Nexmo\Tests\Service;
+
+use Nexmo\Service\Message;
+use Nexmo\Tests\TestCase;
 
 class MessageTest extends TestCase
 {
@@ -101,7 +104,7 @@ class MessageTest extends TestCase
     }
 }
 
-class MessageMock extends \Nexmo\Service\Message
+class MessageMock extends Message
 {
     public function testValidateResponse($params)
     {

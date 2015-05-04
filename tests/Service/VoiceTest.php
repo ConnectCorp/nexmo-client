@@ -1,6 +1,9 @@
 <?php
 
-namespace Nexmo\Tests;
+namespace Nexmo\Tests\Service;
+
+use Nexmo\Service\Voice;
+use Nexmo\Tests\TestCase;
 
 class VoiceTest extends TestCase
 {
@@ -8,14 +11,14 @@ class VoiceTest extends TestCase
     {
         $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
         $this->setExpectedException('Nexmo\Exception');
-        $service = new \Nexmo\Service\Voice($client);
+        $service = new Voice($client);
         $service->invoke();
     }
 
     public function testGetEndpoint()
     {
         $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $service = new \Nexmo\Service\Voice($client);
+        $service = new Voice($client);
         $this->assertEquals($service->getEndpoint(), 'https://rest.nexmo.com/call/json');
     }
 
@@ -27,7 +30,7 @@ class VoiceTest extends TestCase
     }
 }
 
-class VoiceMock extends \Nexmo\Service\Voice
+class VoiceMock extends Voice
 {
     public function testValidateResponse($params)
     {
