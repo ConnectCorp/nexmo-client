@@ -7,33 +7,36 @@ use Nexmo\Tests\TestCase;
 
 class VoiceTest extends TestCase
 {
+    /**
+     * @var VoiceMock
+     */
+    protected $service;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->service = new VoiceMock();
+        $this->service->setClient($this->guzzle());
+    }
+
     public function testExec()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
         $this->setExpectedException('Nexmo\Exception');
-        $service = new Voice($client);
-        $service->invoke();
+        $this->service->invoke();
     }
 
     public function testGetEndpoint()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $service = new Voice($client);
-        $this->assertEquals($service->getEndpoint(), 'https://rest.nexmo.com/call/json');
+        $this->assertEquals($this->service->getEndpoint(), 'call/json');
     }
 
     public function testValidateResponse()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $service = new VoiceMock($client);
-        $this->assertTrue($service->testValidateResponse([]));
+        $this->assertTrue($this->service->testValidateResponse([]));
     }
 }
 
 class VoiceMock extends Voice
 {
-    public function testValidateResponse($params)
-    {
-        return $this->validateResponse($params);
-    }
+    use TestServiceTrait;
 }
