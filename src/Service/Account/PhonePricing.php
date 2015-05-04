@@ -2,6 +2,7 @@
 
 namespace Nexmo\Service\Account;
 
+use Nexmo\Entity;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
@@ -23,9 +24,9 @@ class PhonePricing extends Service
             throw new Exception('$product parameter must be "sms" or "voice"');
         }
         $this->product = $product;
-        return $this->exec([
+        return new Entity\PhonePricing($this->exec([
             'phone' => $phone,
-        ]);
+        ]));
     }
 
     protected function validateResponse(array $json)

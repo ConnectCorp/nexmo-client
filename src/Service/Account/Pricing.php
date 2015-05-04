@@ -2,6 +2,7 @@
 
 namespace Nexmo\Service\Account;
 
+use Nexmo\Entity;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
@@ -17,9 +18,9 @@ class Pricing extends Service
         if (!$country) {
             throw new Exception('$country parameter cannot be blank');
         }
-        return $this->exec([
+        return new Entity\Pricing($this->exec([
             'country' => $country,
-        ]);
+        ]));
     }
 
     protected function validateResponse(array $json)
@@ -33,11 +34,8 @@ class Pricing extends Service
         if (!isset($json['prefix'])) {
             throw new Exception('prefix property expected');
         }
-        if (!isset($json['mt'])) {
-            throw new Exception('mt property expected');
-        }
         if (!isset($json['networks']) || !is_array($json['networks'])) {
-            throw new Exception('networks array property expected');
+            return;
         }
         foreach ($json['networks'] as $network) {
             if (!isset($network['code'])) {
@@ -50,6 +48,5 @@ class Pricing extends Service
                 throw new Exception('network.mtPrice property expected');
             }
         }
-        return true;
     }
 }
