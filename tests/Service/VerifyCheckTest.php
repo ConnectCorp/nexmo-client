@@ -7,29 +7,30 @@ use Nexmo\Tests\TestCase;
 
 class VerifyCheckTest extends TestCase
 {
+    /**
+     * @var VerifyCheckMock
+     */
     private $service;
 
     protected function setUp()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $this->service = $this->getMockBuilder('VerifyCheckMock')->setMethods(['exec'])->setConstructorArgs([$client])->getMock();
+        $this->service = new VerifyCheckMock();
+        $this->service->setClient($this->guzzle());
     }
 
     public function testInvoke()
     {
-        $this->service->expects($this->once())->method('exec')->with(
-            [
-                'request_id' => 'req_id',
-                'code' => '1234',
-                'ip_address' => '0.0.0.0'
-            ]);
-
         $this->service->invoke('req_id', '1234', '0.0.0.0');
+        $this->assertSame($this->service->executedParams, [
+            'request_id' => 'req_id',
+            'code' => '1234',
+            'ip_address' => '0.0.0.0'
+        ]);
     }
 
     public function testGetEndpoint()
     {
-        $this->assertEquals($this->service->getEndpoint(), 'https://api.nexmo.com/verify/check/json');
+        $this->assertEquals($this->service->getEndpoint(), 'verify/check/json');
     }
 
     public function testRequestIdParameterRequired()
@@ -37,7 +38,6 @@ class VerifyCheckTest extends TestCase
         $this->setExpectedException('\Nexmo\Exception', '$requestId parameter cannot be blank');
         $this->service->invoke();
     }
-
 
     public function testCodeParameterRequired()
     {
@@ -59,7 +59,6 @@ class VerifyCheckTest extends TestCase
         $this->service->testValidateResponse(['status' => 1]);
     }
 
-
     public function testValidateResponseErrorText()
     {
         $this->setExpectedException('\Nexmo\Exception', 'Unable to verify number: error - status 2');
@@ -77,8 +76,5 @@ class VerifyCheckTest extends TestCase
 
 class VerifyCheckMock extends VerifyCheck
 {
-    public function testValidateResponse($params)
-    {
-        return $this->validateResponse($params);
-    }
+    use TestServiceTrait;
 }
