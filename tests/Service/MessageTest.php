@@ -7,39 +7,40 @@ use Nexmo\Tests\TestCase;
 
 class MessageTest extends TestCase
 {
+    /**
+     * @var MessageMock
+     */
     private $service;
 
     protected function setUp()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $this->service = $this->getMockBuilder('MessageMock')->setMethods(['exec'])->setConstructorArgs([$client])->getMock();
+        $this->service = new MessageMock();
+        $this->service->setClient($this->guzzle());
     }
 
     public function testInvoke()
     {
-        $this->service->expects($this->once())->method('exec')->with(
-            [
-                'from' => 5005550000,
-                'to' => '5005551111',
-                'type' => 'text',
-                'text' => 'message',
-                'status_report_req' => 'status_rep_req',
-                'client_ref' => 'client_ref',
-                'network_code' => 'net_code',
-                'vcard' => 'vcard',
-                'vcal' => 'vcal',
-                'ttl' => 1,
-                'message_class' => 'class',
-                'body' => 'body',
-                'udh' => 'udh'
-            ]);
-
         $this->service->invoke(5005550000, 5005551111, 'text', 'message', 'status_rep_req', 'client_ref', 'net_code', 'vcard', 'vcal', 1, 'class', 'body', 'udh');
+        $this->assertSame($this->service->executedParams, [
+            'from' => 5005550000,
+            'to' => 5005551111,
+            'type' => 'text',
+            'text' => 'message',
+            'status_report_req' => 'status_rep_req',
+            'client_ref' => 'client_ref',
+            'network_code' => 'net_code',
+            'vcard' => 'vcard',
+            'vcal' => 'vcal',
+            'ttl' => 1,
+            'message_class' => 'class',
+            'body' => 'body',
+            'udh' => 'udh'
+        ]);
     }
 
     public function testGetEndpoint()
     {
-        $this->assertEquals($this->service->getEndpoint(), 'https://rest.nexmo.com/sms/json');
+        $this->assertEquals($this->service->getEndpoint(), 'sms/json');
     }
 
     public function testFromParameterRequired()
@@ -106,8 +107,5 @@ class MessageTest extends TestCase
 
 class MessageMock extends Message
 {
-    public function testValidateResponse($params)
-    {
-        return $this->validateResponse($params);
-    }
+    use TestServiceTrait;
 }
