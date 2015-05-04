@@ -2,7 +2,7 @@
 
 namespace Nexmo\Service;
 
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 
 /**
  * A Resource has a Guzzle client
@@ -10,14 +10,14 @@ use GuzzleHttp\Client;
 abstract class Resource
 {
     /**
-     * @var Client
+     * @var ClientInterface
      */
     protected $client;
 
     /**
-     * @param Client $client
+     * @param ClientInterface $client
      */
-    public function setClient(Client $client)
+    public function setClient(ClientInterface $client)
     {
         $this->client = $client;
     }
