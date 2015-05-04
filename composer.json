@@ -24,7 +24,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Nexmo\\Tests": "tests/"
+      "Nexmo\\Tests\\": "tests/"
     }
   }
 }
