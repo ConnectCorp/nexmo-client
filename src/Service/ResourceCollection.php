@@ -36,11 +36,13 @@ abstract class ResourceCollection extends Resource
                 $this->namespace = $this->getNamespace();
             }
             $clsName = $this->namespace . '\\' . ucfirst($name);
-            $cls = new $clsName();
-            if (!$cls instanceof Resource) {
+            if (!is_subclass_of($clsName, '\Nexmo\Service\Resource')) {
                 throw new Exception("Class $clsName is not a Nexmo Resource");
             }
+            /** @var \Nexmo\Service\Resource $cls */
+            $cls = new $clsName();
             $cls->setClient($this->client);
+
             $this->resources[$name] = $cls;
         }
         return $this->resources[$name];
