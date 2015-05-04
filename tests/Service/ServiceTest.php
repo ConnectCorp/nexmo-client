@@ -1,6 +1,8 @@
 <?php
 
-class ServiceTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests;
+
+class ServiceTest extends TestCase
 {
 
     public function testInvoke()
@@ -125,4 +127,3 @@ class ServiceMock extends \Nexmo\Service\Service
         // TODO: Implement validateResponse() method.
     }
 }
- 

@@ -1,6 +1,8 @@
 <?php
 
-class MessageTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests;
+
+class MessageTest extends TestCase
 {
     private $service;
 

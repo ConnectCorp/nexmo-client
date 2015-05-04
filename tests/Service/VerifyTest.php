@@ -1,6 +1,8 @@
 <?php
 
-class VerifyTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests;
+
+class VerifyTest extends TestCase
 {
     private $service;
 
@@ -92,4 +94,3 @@ class VerifyMock extends \Nexmo\Service\Verify
         return $this->validateResponse($params);
     }
 }
- 

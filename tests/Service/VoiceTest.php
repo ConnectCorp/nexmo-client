@@ -1,6 +1,8 @@
 <?php
 
-class VoiceTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests;
+
+class VoiceTest extends TestCase
 {
     public function testExec()
     {
@@ -32,4 +34,3 @@ class VoiceMock extends \Nexmo\Service\Voice
         return $this->validateResponse($params);
     }
 }
- 

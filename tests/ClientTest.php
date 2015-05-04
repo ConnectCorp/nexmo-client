@@ -1,6 +1,8 @@
 <?php
 
-class ClientTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests;
+
+class ClientTest extends TestCase
 {
 
     private $client;
@@ -18,4 +20,3 @@ class ClientTest extends PHPUnit_Framework_TestCase
     }
 
 }
- 
