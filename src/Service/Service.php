@@ -2,7 +2,9 @@
 
 namespace Nexmo\Service;
 
-use Nexmo\Exception;
+use GuzzleHttp\Exception\ParseException as GuzzleParseException;
+use Nexmo\Exception\Exception;
+use Nexmo\Exception\ParseException;
 
 /**
  * Class Service
@@ -39,11 +41,10 @@ abstract class Service extends Resource
             'query' => $params
         ]);
 
-        $body = $response->getBody();
-
-        $json = json_decode($body, true);
-        if (json_last_error()) {
-            throw new Exception('Unable to parse JSON');
+        try {
+            $json = $response->json();
+        } catch (GuzzleParseException $e) {
+            throw new ParseException($e->getMessage(), $e->getResponse(), $e);
         }
 
         $this->validateResponse($json);
