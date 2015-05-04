@@ -45,12 +45,8 @@ class Pricing extends Collection
      */
     public function networks()
     {
-        $networks = $this->get('networks');
-        if (!is_array($networks)) {
-            return [];
-        }
-        return array_map(function ($network) {
+        return $this->getArray('networks', function ($network) {
             return new Network($network);
-        }, $networks);
+        });
     }
 }
