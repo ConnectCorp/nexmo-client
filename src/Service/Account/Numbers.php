@@ -49,7 +49,5 @@ class Numbers extends Service
                 throw new Exception('number.moHttpUrl property expected');
             }
         }
-
-        return true;
     }
 }

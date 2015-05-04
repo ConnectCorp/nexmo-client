@@ -23,6 +23,5 @@ class Balance extends Service
         if (!isset($json['value'])) {
             throw new Exception('value property expected');
         }
-        return true;
     }
 }

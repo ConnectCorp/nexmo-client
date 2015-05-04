@@ -1,0 +1,102 @@
+<?php
+namespace Nexmo\Tests\Service\Account;
+
+use Nexmo\Service\Account\PricingInternational;
+
+class PricingInternationalTest extends AccountTestCase
+{
+    /**
+     * @var PricingInternationalMock
+     */
+    private $service;
+
+    protected function setUp()
+    {
+        $this->service = new PricingInternationalMock();
+        $this->service->setClient($this->guzzle());
+    }
+
+    public function testInvoke()
+    {
+        $this->addResponse($this->validResponse());
+        $this->service->invoke(1);
+        $this->assertSame([
+            'prefix' => 1,
+        ], $this->service->executedParams);
+    }
+
+    public function testNoPrefix()
+    {
+        $this->setExpectedException('\Nexmo\Exception', '$prefix parameter cannot be blank');
+        $this->service->invoke();
+    }
+
+    public function testResponse()
+    {
+        $this->addResponse($this->validResponse());
+        $prices = $this->service->invoke(1);
+        $this->assertCount(2, $prices);
+        foreach ($prices as $price) {
+            $this->assertInstanceOf('\Nexmo\Entity\Pricing', $price);
+        }
+    }
+
+    public function testGetEndpoint()
+    {
+        $this->assertSame('account/get-prefix-pricing/outbound', $this->service->getEndpoint());
+    }
+
+    public function testValidateResponsePricesProperty()
+    {
+        $response = $this->validResponse();
+        unset($response['prices']);
+        $this->assertInvalidResponseException($response, 'prices array');
+    }
+
+    public function testValidateResponsePricesPropertyIsArray()
+    {
+        $response = $this->validResponse();
+        $response['prices'] = null;
+        $this->assertInvalidResponseException($response, 'prices array');
+    }
+
+    protected function assertInvalidResponseException($response, $field)
+    {
+        $this->addResponse($response);
+        $this->setExpectedException('\Nexmo\Exception', $field . ' property expected');
+        $this->service->invoke(1);
+    }
+
+    protected function validResponse()
+    {
+        $price = [
+            'country' => 1,
+            'name' => '',
+            'prefix' => '1',
+            'networks' => [
+                [
+                    'code' => '',
+                    'network' => '',
+                    'mtPrice' => '',
+                ],
+            ],
+        ];
+        return [
+            'prices' => [
+                $price,
+                $price
+            ],
+        ];
+    }
+}
+
+class PricingInternationalMock extends PricingInternational
+{
+    public $executedParams;
+
+    protected function exec($params)
+    {
+        $this->executedParams = $params;
+        return parent::exec($params);
+    }
+}

@@ -38,7 +38,5 @@ class PricingInternational extends Pricing
         foreach ($json['prices'] as $price) {
             parent::validateResponse($price);
         }
-        return true;
     }
-
 }

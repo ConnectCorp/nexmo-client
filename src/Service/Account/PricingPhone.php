@@ -23,6 +23,9 @@ class PricingPhone extends Service
         if (!in_array($product, ['sms', 'voice'], true)) {
             throw new Exception('$product parameter must be "sms" or "voice"');
         }
+        if (!$phone) {
+            throw new Exception('$phone parameter cannot be blank');
+        }
         $this->product = $product;
         return new Entity\PricingPhone($this->exec([
             'phone' => $phone,

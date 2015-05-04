@@ -29,6 +29,16 @@ abstract class ResourceCollection extends Resource
         return '\\' . implode('\\', $parts);
     }
 
+    /**
+     * @param $class
+     *
+     * @return \Nexmo\Service\Resource
+     */
+    protected function initializeClass($class)
+    {
+        return new $class();
+    }
+
     public function __get($name)
     {
         if (!isset($this->resources[$name])) {
@@ -39,8 +49,7 @@ abstract class ResourceCollection extends Resource
             if (!is_subclass_of($clsName, '\Nexmo\Service\Resource')) {
                 throw new Exception("Class $clsName is not a Nexmo Resource");
             }
-            /** @var \Nexmo\Service\Resource $cls */
-            $cls = new $clsName();
+            $cls = $this->initializeClass($clsName);
             $cls->setClient($this->client);
 
             $this->resources[$name] = $cls;
