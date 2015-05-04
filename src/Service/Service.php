@@ -3,8 +3,7 @@
 namespace Nexmo\Service;
 
 use GuzzleHttp\Exception\ParseException as GuzzleParseException;
-use Nexmo\Exception\Exception;
-use Nexmo\Exception\ParseException;
+use Nexmo\Exception;
 
 /**
  * Class Service
@@ -44,7 +43,7 @@ abstract class Service extends Resource
         try {
             $json = $response->json();
         } catch (GuzzleParseException $e) {
-            throw new ParseException($e->getMessage(), $e->getResponse(), $e);
+            throw new Exception($e->getMessage(), 0, $e);
         }
 
         $this->validateResponse($json);

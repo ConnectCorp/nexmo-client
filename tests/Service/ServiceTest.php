@@ -60,7 +60,7 @@ class ServiceTest extends TestCase
     {
         $this->addResponse('nonjsonstring');
 
-        $this->setExpectedException('\Nexmo\Exception\ParseException');
+        $this->setExpectedException('\Nexmo\Exception', 'Unable to parse JSON data: JSON_ERROR_SYNTAX - Syntax error, malformed JSON');
 
         $this->service->testExec([]);
     }
