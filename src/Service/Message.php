@@ -16,23 +16,42 @@ class Message extends Service
      */
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/sms/json';
+        return 'sms/json';
     }
 
     /**
-     * @param $from
-     * @param $to
-     * @param string $type
-     * @param string $text
-     * @param string $statusReportReq
-     * @param string $clientRef
-     * @param string $networkCode
-     * @param string $vcard
-     * @param string $vcal
-     * @param integer $ttl
-     * @param string $messageClass
-     * @param string $body
-     * @param string $udh
+     * Send a message.
+     *
+     * Nexmo supports Unicode for multiple language support. Text length, however, is limited to
+     * 70 characters-exceeding 70 characters will have your message split into parts.
+     * Further, the mobile device must support the character encoding, for example, a US device may not display Arabic.
+     *
+     * In the event your text is longer than 160 characters, Nexmo will split the message into parts.
+     * Nexmo's response, in that case, will tell you how many parts the message has been sent in.
+     *
+     * @param string|int $from            Sender address may be alphanumeric (Ex: from=MyCompany20).
+     *                                    Restrictions may apply, depending on the destination.
+     * @param string|int $to              Mobile number in international format.
+     *                                    Ex: 447525856424 or 00447525856424 when sending to UK.
+     * @param string     $type            This can be omitted for text (default),
+     *                                    but is required when sending a Binary (binary),
+     *                                    WAP Push (wappush), Unicode message (unicode), vcal (vcal) or vcard (vcard).
+     * @param string     $text            Required when type='text'.
+     *                                    Body of the text message (with a maximum length of 3200 characters),
+     *                                    UTF-8 and URL encoded value.
+     *                                    Ex: "Déjà vu" content would be "D%c3%a9j%c3%a0+vu"
+     * @param string     $statusReportReq Set to 1 if you want to receive a delivery report (DLR) for this request.
+     *                                    Make sure to configure your "Callback URL" in your "API Settings"
+     * @param string     $clientRef       Include any reference string for your reference.
+     *                                    Useful for your internal reports (40 characters max).
+     * @param string     $networkCode     Force the recipient network operator MCCMNC, make sure to supply the
+     *                                    correct information otherwise the message won't be delivered.
+     * @param string     $vcard           vcard text body correctly formatted.
+     * @param string     $vcal            vcal text body correctly formatted.
+     * @param integer    $ttl             Message life span in milliseconds.
+     * @param string     $messageClass    Set to 0 for Flash SMS.
+     * @param string     $body            Hex encoded binary data. Ex: 0011223344556677
+     * @param string     $udh             To set your custom UDH (Hex encoded). Ex: 06050415811581
      * @throws Exception
      * @return array
      */

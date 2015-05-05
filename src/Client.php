@@ -3,35 +3,32 @@
 namespace Nexmo;
 
 use GuzzleHttp\Client as HttpClient;
-use Nexmo\Service\Message;
-use Nexmo\Service\Verify;
-use Nexmo\Service\Voice;
+use Nexmo\Service;
+use Nexmo\Service\ResourceCollection;
 
 /**
  * Class Client
+ *
+ * @property-read Service\Account $account Account management APIs
+ * @property-read Service\Message $message
+ * @property-read Service\Voice   $voice
+ * @property-read Service\Verify  $verify
+ *
  * @package Nexmo\Client
  */
-class Client
+class Client extends ResourceCollection
 {
-    /**
-     * @var HttpClient
-     */
-    private $client;
+    const BASE_URL = 'https://rest.nexmo.com/';
 
     /**
-     * @var Message
+     * @var string
      */
-    public $message;
+    private $apiKey;
 
     /**
-     * @var Voice
+     * @var string
      */
-    public $voice;
-
-    /**
-     * @var Verify
-     */
-    public $verify;
+    private $apiSecret;
 
     /**
      * @param string $apiKey
@@ -39,17 +36,34 @@ class Client
      */
     public function __construct($apiKey, $apiSecret)
     {
+        $this->apiKey = $apiKey;
+        $this->apiSecret = $apiSecret;
+    }
+
+    protected function getNamespace()
+    {
+        return 'Nexmo\Service';
+    }
+
+    public function __get($name)
+    {
+        $this->loadClient();
+        return parent::__get($name);
+    }
+
+    protected function loadClient()
+    {
+        if ($this->client) {
+            return;
+        }
         $this->client = new HttpClient([
+            'base_url' => static::BASE_URL,
             'defaults' => [
                 'query' => [
-                    'api_key' => $apiKey,
-                    'api_secret' => $apiSecret
+                    'api_key' => $this->apiKey,
+                    'api_secret' => $this->apiSecret
                 ]
             ]
         ]);
-
-        $this->voice = new Voice($this->client);
-        $this->verify = new Verify($this->client);
-        $this->message = new Message($this->client);
     }
 }

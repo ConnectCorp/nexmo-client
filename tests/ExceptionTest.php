@@ -1,6 +1,8 @@
 <?php
 
-class ExceptionTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests;
+
+class ExceptionTest extends TestCase
 {
     public function testInstanceOf()
     {

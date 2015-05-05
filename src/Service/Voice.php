@@ -15,7 +15,7 @@ class Voice extends Service
      */
     public function getEndpoint()
     {
-        return 'https://rest.nexmo.com/call/json';
+        return 'call/json';
     }
 
     /**
