@@ -6,15 +6,33 @@ use Nexmo\Entity;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
+/**
+ * Retrieve Nexmo's outbound SMS/Voice pricing for a given phone number.
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class Phone extends Service
 {
+    /**
+     * @var string
+     */
     protected $product;
 
+    /**
+     * @inheritdoc
+     */
     public function getEndpoint()
     {
         return 'account/get-phone-pricing/outbound/' . $this->product;
     }
 
+    /**
+     * @param string $product
+     * @param string $phone
+     *
+     * @return Entity\PricingPhone
+     * @throws Exception
+     */
     public function invoke($product = null, $phone = null)
     {
         if (!$product) {
@@ -32,6 +50,9 @@ class Phone extends Service
         ]));
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function validateResponse(array $json)
     {
         if (!isset($json['country-code'])) {

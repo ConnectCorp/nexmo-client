@@ -9,6 +9,8 @@ use IteratorAggregate;
 
 /**
  * An Immutable key value pair collection
+ *
+ * @author Carson Full <carsonfull@gmail.com>
  */
 class Collection implements ArrayAccess, Countable, IteratorAggregate
 {

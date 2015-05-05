@@ -12,6 +12,8 @@ use Nexmo\Exception;
  * @property-read Account\Balance $balance
  * @property-read Account\Numbers $numbers
  * @property-read Account\Pricing $pricing
+ *
+ * @author Carson Full <carsonfull@gmail.com>
  */
 class Account extends ResourceCollection
 {
@@ -36,6 +38,7 @@ class Account extends ResourceCollection
      *                                  0 = starts with
      *                                  1 = anywhere
      *                                  2 = ends with
+     *
      * @return Entity\NumberCollection|Entity\Number[]
      * @throws Exception
      */

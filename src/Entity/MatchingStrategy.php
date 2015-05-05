@@ -5,6 +5,8 @@ namespace Nexmo\Entity;
  * Strategies for matching numbers
  *
  * @see \Nexmo\Service\Account\Numbers
+ *
+ * @author Carson Full <carsonfull@gmail.com>
  */
 final class MatchingStrategy
 {

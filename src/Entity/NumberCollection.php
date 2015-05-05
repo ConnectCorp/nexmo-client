@@ -1,6 +1,13 @@
 <?php
 namespace Nexmo\Entity;
 
+/**
+ * An object representation of Nexmo's list of numbers
+ *
+ * @see \Nexmo\Service\Account::numbers
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class NumberCollection extends Collection
 {
     /**
@@ -26,6 +33,9 @@ class NumberCollection extends Collection
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->numbers());

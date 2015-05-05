@@ -1,10 +1,19 @@
 <?php
 namespace Nexmo\Entity;
 
+/**
+ * An object representation of Nexmo's pricing
+ *
+ * @see    \Nexmo\Service\Account\Pricing::country
+ * @see    \Nexmo\Service\Account\Pricing::international
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class Pricing extends Collection
 {
     /**
      * Country code
+     *
      * @return string
      */
     public function countryCode()
@@ -14,6 +23,7 @@ class Pricing extends Collection
 
     /**
      * Country name
+     *
      * @return string
      */
     public function countryName()
@@ -22,7 +32,8 @@ class Pricing extends Collection
     }
 
     /**
-     * The international calling prefix
+     * International calling prefix
+     *
      * @return int
      */
     public function countryPrefix()
@@ -32,6 +43,7 @@ class Pricing extends Collection
 
     /**
      * Default price for outbound message in Euro
+     *
      * @return float
      */
     public function price()
@@ -41,6 +53,7 @@ class Pricing extends Collection
 
     /**
      * Supported networks
+     *
      * @return Network[]
      */
     public function networks()

@@ -6,23 +6,41 @@ use Nexmo\Entity;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
+/**
+ * Retrieve Nexmo's outbound pricing for a given country.
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class Country extends Service
 {
+    /**
+     * @inheritdoc
+     */
     public function getEndpoint()
     {
         return 'account/get-pricing/outbound';
     }
 
+    /**
+     * @param string $country
+     *
+     * @return Entity\Pricing
+     * @throws Exception
+     */
     public function invoke($country = null)
     {
         if (!$country) {
             throw new Exception('$country parameter cannot be blank');
         }
+
         return new Entity\Pricing($this->exec([
             'country' => $country,
         ]));
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function validateResponse(array $json)
     {
         if (!isset($json['country'])) {

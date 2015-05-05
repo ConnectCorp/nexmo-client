@@ -1,6 +1,13 @@
 <?php
 namespace Nexmo\Entity;
 
+/**
+ * An object representation of Nexmo's number
+ *
+ * @see \Nexmo\Service\Account::numbers
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class Number extends Collection
 {
     /**

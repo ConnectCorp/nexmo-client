@@ -1,6 +1,11 @@
 <?php
 namespace Nexmo\Entity;
 
+/**
+ * An object representation of a network property under {@see Pricing}
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class Network extends Collection
 {
     /**
@@ -17,6 +22,7 @@ class Network extends Collection
 
     /**
      * Price for outbound message in Euro
+     *
      * @return float
      */
     public function defaultPrice()
@@ -26,6 +32,7 @@ class Network extends Collection
 
     /**
      * Network operator name
+     *
      * @return string
      */
     public function name()

@@ -5,8 +5,16 @@ namespace Nexmo\Service\Account\Pricing;
 use Nexmo\Entity;
 use Nexmo\Exception;
 
+/**
+ * Retrieve Nexmo's outbound pricing for a given international prefix.
+ *
+ * @author Carson Full <carsonfull@gmail.com>
+ */
 class International extends Country
 {
+    /**
+     * @inheritdoc
+     */
     public function getEndpoint()
     {
         return 'account/get-prefix-pricing/outbound';
@@ -30,6 +38,9 @@ class International extends Country
         }, $data['prices']);
     }
 
+    /**
+     * @inheritdoc
+     */
     protected function validateResponse(array $json)
     {
         if (!isset($json['prices']) || !is_array($json['prices'])) {
