@@ -25,7 +25,7 @@ class Pricing extends Collection
      * The international calling prefix
      * @return int
      */
-    public function prefix()
+    public function countryPrefix()
     {
         return (int)$this->get('prefix');
     }

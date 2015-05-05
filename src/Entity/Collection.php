@@ -82,9 +82,4 @@ class Collection implements ArrayAccess, Countable, IteratorAggregate
     {
         return count($this->data);
     }
-
-    public function __call($name, $arguments)
-    {
-        $this->get($name);
-    }
 }
