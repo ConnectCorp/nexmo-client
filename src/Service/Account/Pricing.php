@@ -4,49 +4,67 @@ namespace Nexmo\Service\Account;
 
 use Nexmo\Entity;
 use Nexmo\Exception;
-use Nexmo\Service\Service;
+use Nexmo\Service\ResourceCollection;
 
-class Pricing extends Service
+/**
+ * Pricing APIs
+ *
+ * @property-read Pricing\Country       $country
+ * @property-read Pricing\International $international
+ * @property-read Pricing\Phone         $phone
+ */
+class Pricing extends ResourceCollection
 {
-    public function getEndpoint()
+    protected function getNamespaceSuffix()
     {
-        return 'account/get-pricing/outbound';
+        return 'Pricing';
     }
 
-    public function invoke($country = null)
+    /**
+     * Retrieve Nexmo's outbound pricing for a given country.
+     *
+     * @param string $country A 2 letter country code. Ex: CA
+     * @return Entity\Pricing
+     * @throws Exception
+     */
+    public function country($country)
     {
-        if (!$country) {
-            throw new Exception('$country parameter cannot be blank');
-        }
-        return new Entity\Pricing($this->exec([
-            'country' => $country,
-        ]));
+        return $this->country->invoke($country);
     }
 
-    protected function validateResponse(array $json)
+    /**
+     * Retrieve Nexmo's outbound pricing for a given international prefix.
+     *
+     * @param int $prefix International dialing code. Ex: 44
+     * @return Entity\Pricing[]
+     * @throws Exception
+     */
+    public function international($prefix)
     {
-        if (!isset($json['country'])) {
-            throw new Exception('country property expected');
-        }
-        if (!isset($json['name'])) {
-            throw new Exception('name property expected');
-        }
-        if (!isset($json['prefix'])) {
-            throw new Exception('prefix property expected');
-        }
-        if (!isset($json['networks']) || !is_array($json['networks'])) {
-            return;
-        }
-        foreach ($json['networks'] as $network) {
-            if (!isset($network['code'])) {
-                throw new Exception('network.code property expected');
-            }
-            if (!isset($network['network'])) {
-                throw new Exception('network.network property expected');
-            }
-            if (!isset($network['mtPrice'])) {
-                throw new Exception('network.mtPrice property expected');
-            }
-        }
+        return $this->international->invoke($prefix);
+    }
+
+    /**
+     * Retrieve Nexmo's outbound SMS pricing for a given phone number.
+     *
+     * @param string $number Phone number in international format Ex: 447525856424
+     * @return Entity\PricingPhone
+     * @throws Exception
+     */
+    public function sms($number)
+    {
+        return $this->phone->invoke('sms', $number);
+    }
+
+    /**
+     * Retrieve Nexmo's outbound voice pricing for a given phone number.
+     *
+     * @param string $number Phone number in international format Ex: 447525856424
+     * @return Entity\PricingPhone
+     * @throws Exception
+     */
+    public function voice($number)
+    {
+        return $this->phone->invoke('voice', $number);
     }
 }

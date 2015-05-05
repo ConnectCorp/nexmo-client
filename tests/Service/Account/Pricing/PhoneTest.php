@@ -1,18 +1,19 @@
 <?php
-namespace Nexmo\Tests\Service\Account;
+namespace Nexmo\Tests\Service\Account\Pricing;
 
-use Nexmo\Service\Account\PricingPhone;
+use Nexmo\Service\Account\Pricing\Phone;
+use Nexmo\Tests\Service\Account\AccountTestCase;
 
-class PricingPhoneTest extends AccountTestCase
+class PhoneTest extends AccountTestCase
 {
     /**
-     * @var PricingPhoneMock
+     * @var PhoneMock
      */
     private $service;
 
     protected function setUp()
     {
-        $this->service = new PricingPhoneMock();
+        $this->service = new PhoneMock();
         $this->service->setClient($this->guzzle());
     }
 
@@ -94,7 +95,7 @@ class PricingPhoneTest extends AccountTestCase
     }
 }
 
-class PricingPhoneMock extends PricingPhone
+class PhoneMock extends Phone
 {
     public $executedParams;
 

@@ -1,11 +1,11 @@
 <?php
 
-namespace Nexmo\Service\Account;
+namespace Nexmo\Service\Account\Pricing;
 
 use Nexmo\Entity;
 use Nexmo\Exception;
 
-class PricingInternational extends Pricing
+class International extends Country
 {
     public function getEndpoint()
     {

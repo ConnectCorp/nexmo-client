@@ -1,12 +1,12 @@
 <?php
 
-namespace Nexmo\Service\Account;
+namespace Nexmo\Service\Account\Pricing;
 
 use Nexmo\Entity;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
 
-class PricingPhone extends Service
+class Phone extends Service
 {
     protected $product;
 

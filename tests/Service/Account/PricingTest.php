@@ -2,128 +2,79 @@
 namespace Nexmo\Tests\Service\Account;
 
 use Nexmo\Service\Account\Pricing;
+use Nexmo\Tests\TestCase;
 
-class PricingTest extends AccountTestCase
+class PricingTest extends TestCase
 {
     /**
      * @var PricingMock
      */
-    private $service;
+    private $pricing;
 
     protected function setUp()
     {
-        $this->service = new PricingMock();
-        $this->service->setClient($this->guzzle());
+        $this->pricing = new PricingMock();
+        $this->pricing->setClient($this->guzzle());
     }
 
-    public function testInvoke()
+    public function testProperties()
     {
-        $this->addResponse($this->validResponse());
-        $this->service->invoke('US');
-        $this->assertSame([
-            'country' => 'US',
-        ], $this->service->executedParams);
+        $this->assertInstanceOf('\Nexmo\Service\Account\Pricing\Country', $this->pricing->country);
+        $this->assertInstanceOf('\Nexmo\Service\Account\Pricing\International', $this->pricing->international);
+        $this->assertInstanceOf('\Nexmo\Service\Account\Pricing\Phone', $this->pricing->phone);
     }
 
-    public function testMissingCountryParameter()
+    public function testCountry()
     {
-        $this->setExpectedException('\Nexmo\Exception', '$country parameter cannot be blank');
-        $this->service->invoke();
+        $this->pricing->country('US');
+        $this->assertResourceInitialized('country');
     }
 
-    public function testResponse()
+    public function testPricingInternational()
     {
-        $this->addResponse($this->validResponse());
-        $pricing = $this->service->invoke('US');
-        $this->assertInstanceOf('\Nexmo\Entity\Pricing', $pricing);
+        $this->pricing->international(1);
+        $this->assertResourceInitialized('international');
     }
 
-    public function testGetEndpoint()
+    public function testPricingSms()
     {
-        $this->assertSame('account/get-pricing/outbound', $this->service->getEndpoint());
+        $this->pricing->sms(1234567890);
+        $this->assertResourceInitialized('phone');
     }
 
-    public function testValidateResponseCountryProperty()
+    public function testPricingVoice()
     {
-        $response = $this->validResponse();
-        unset($response['country']);
-        $this->assertInvalidResponseException($response, 'country');
+        $this->pricing->voice(1234567890);
+        $this->assertResourceInitialized('phone');
     }
 
-    public function testValidateResponseNameProperty()
+    protected function assertResourceInitialized($resource)
     {
-        $response = $this->validResponse();
-        unset($response['name']);
-        $this->assertInvalidResponseException($response, 'name');
-    }
-
-    public function testValidateResponsePrefixProperty()
-    {
-        $response = $this->validResponse();
-        unset($response['prefix']);
-        $this->assertInvalidResponseException($response, 'prefix');
-    }
-
-    public function testValidateResponseNoNetworksProperty()
-    {
-        $response = $this->validResponse();
-        unset($response['networks']);
-        $this->addResponse($response);
-        $this->service->invoke('US');
-    }
-
-    public function testValidateResponseNetworkCodeProperty()
-    {
-        $response = $this->validResponse();
-        unset($response['networks'][0]['code']);
-        $this->assertInvalidResponseException($response, 'network.code');
-    }
-
-    public function testValidateResponseNetworkNetworkProperty()
-    {
-        $response = $this->validResponse();
-        unset($response['networks'][0]['network']);
-        $this->assertInvalidResponseException($response, 'network.network');
-    }
-
-    public function testValidateResponseNetworkPriceProperty()
-    {
-        $response = $this->validResponse();
-        unset($response['networks'][0]['mtPrice']);
-        $this->assertInvalidResponseException($response, 'network.mtPrice');
-    }
-
-    protected function assertInvalidResponseException($response, $field)
-    {
-        $this->addResponse($response);
-        $this->setExpectedException('\Nexmo\Exception', $field . ' property expected');
-        $this->service->invoke('US');
-    }
-
-    protected function validResponse()
-    {
-        return [
-            'country' => 'US',
-            'name' => '',
-            'prefix' => '1',
-            'networks' => [
-                [
-                    'code' => '',
-                    'network' => '',
-                    'mtPrice' => '',
-                ],
-            ],
-        ];
+        $this->assertTrue($this->pricing->isResourceInitialized($resource), $resource . ' has not been initialized');
     }
 }
 
 class PricingMock extends Pricing
 {
-    public $executedParams;
+    protected $generator;
 
-    protected function exec($params)
+    public function __construct()
     {
-        $this->executedParams = $params;
-        return parent::exec($params);
+        $this->generator = new \PHPUnit_Framework_MockObject_Generator;
+    }
+
+    public function getNamespace()
+    {
+        return '\\Nexmo\\Service\\Account\\' . $this->getNamespaceSuffix();
+    }
+
+    protected function initializeClass($class)
+    {
+        return $this->generator->getMock($class);
+    }
+
+    public function isResourceInitialized($resource)
+    {
+        return isset($this->resources[$resource]);
     }
 }

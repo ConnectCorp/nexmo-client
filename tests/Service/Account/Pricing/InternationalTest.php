@@ -1,18 +1,19 @@
 <?php
-namespace Nexmo\Tests\Service\Account;
+namespace Nexmo\Tests\Service\Account\Pricing;
 
-use Nexmo\Service\Account\PricingInternational;
+use Nexmo\Service\Account\Pricing\International;
+use Nexmo\Tests\Service\Account\AccountTestCase;
 
-class PricingInternationalTest extends AccountTestCase
+class InternationalTest extends AccountTestCase
 {
     /**
-     * @var PricingInternationalMock
+     * @var InternationalMock
      */
     private $service;
 
     protected function setUp()
     {
-        $this->service = new PricingInternationalMock();
+        $this->service = new InternationalMock();
         $this->service->setClient($this->guzzle());
     }
 
@@ -90,7 +91,7 @@ class PricingInternationalTest extends AccountTestCase
     }
 }
 
-class PricingInternationalMock extends PricingInternational
+class InternationalMock extends International
 {
     public $executedParams;
 

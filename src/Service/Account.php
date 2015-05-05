@@ -9,11 +9,9 @@ use Nexmo\Exception;
 /**
  * Account management APIs
  *
- * @property-read Account\Balance              $balance
- * @property-read Account\Numbers              $numbers
- * @property-read Account\Pricing              $pricing
- * @property-read Account\PricingInternational $pricingInternational
- * @property-read Account\PricingPhone         $pricingPhone
+ * @property-read Account\Balance $balance
+ * @property-read Account\Numbers $numbers
+ * @property-read Account\Pricing $pricing
  */
 class Account extends ResourceCollection
 {
@@ -49,53 +47,5 @@ class Account extends ResourceCollection
     public function numbers($index = 1, $size = 10, $pattern = null, $searchPattern = MatchingStrategy::STARTS_WITH)
     {
         return $this->numbers->invoke($index, $size, $pattern, $searchPattern);
-    }
-
-    /**
-     * Retrieve Nexmo's outbound pricing for a given country.
-     *
-     * @param string $country A 2 letter country code. Ex: CA
-     * @return Entity\Pricing
-     * @throws Exception
-     */
-    public function pricing($country)
-    {
-        return $this->pricing->invoke($country);
-    }
-
-    /**
-     * Retrieve Nexmo's outbound pricing for a given international prefix.
-     *
-     * @param int $prefix International dialing code. Ex: 44
-     * @return Entity\Pricing[]
-     * @throws Exception
-     */
-    public function pricingInternational($prefix)
-    {
-        return $this->pricingInternational->invoke($prefix);
-    }
-
-    /**
-     * Retrieve Nexmo's outbound voice pricing for a given phone number.
-     *
-     * @param string $number Phone number in international format Ex: 447525856424
-     * @return Entity\PricingPhone
-     * @throws Exception
-     */
-    public function pricingSms($number)
-    {
-        return $this->pricingPhone->invoke('sms', $number);
-    }
-
-    /**
-     * Retrieve Nexmo's outbound SMS pricing for a given phone number.
-     *
-     * @param string $number Phone number in international format Ex: 447525856424
-     * @return Entity\PricingPhone
-     * @throws Exception
-     */
-    public function pricingVoice($number)
-    {
-        return $this->pricingPhone->invoke('voice', $number);
     }
 }

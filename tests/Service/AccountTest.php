@@ -22,8 +22,6 @@ class AccountTest extends TestCase
         $this->assertInstanceOf('\Nexmo\Service\Account\Balance', $this->account->balance);
         $this->assertInstanceOf('\Nexmo\Service\Account\Numbers', $this->account->numbers);
         $this->assertInstanceOf('\Nexmo\Service\Account\Pricing', $this->account->pricing);
-        $this->assertInstanceOf('\Nexmo\Service\Account\PricingInternational', $this->account->pricingInternational);
-        $this->assertInstanceOf('\Nexmo\Service\Account\PricingPhone', $this->account->pricingPhone);
     }
 
     public function testInvalidProperty()
@@ -42,30 +40,6 @@ class AccountTest extends TestCase
     {
         $this->account->numbers(2, 12, 1234, 2);
         $this->assertResourceInitialized('numbers');
-    }
-
-    public function testPricing()
-    {
-        $this->account->pricing('US');
-        $this->assertResourceInitialized('pricing');
-    }
-
-    public function testPricingInternational()
-    {
-        $this->account->pricingInternational(1);
-        $this->assertResourceInitialized('pricingInternational');
-    }
-
-    public function testPricingSms()
-    {
-        $this->account->pricingSms(1234567890);
-        $this->assertResourceInitialized('pricingPhone');
-    }
-
-    public function testPricingVoice()
-    {
-        $this->account->pricingVoice(1234567890);
-        $this->assertResourceInitialized('pricingPhone');
     }
 
     protected function assertResourceInitialized($resource)
