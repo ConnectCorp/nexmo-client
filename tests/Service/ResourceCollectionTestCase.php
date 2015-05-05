@@ -29,4 +29,11 @@ abstract class ResourceCollectionTestCase extends TestCase
     {
         $this->assertTrue($this->service->isResourceInitialized($resource), $resource . ' has not been initialized');
     }
+
+    public function testInvalidProperty()
+    {
+        $ns = $this->service()->getNamespace();
+        $this->setExpectedException('\Nexmo\Exception', "Class $ns\\Foo is not a Nexmo Resource");
+        $this->service()->foo;
+    }
 }

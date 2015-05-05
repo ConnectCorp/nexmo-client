@@ -28,12 +28,6 @@ class AccountTest extends ResourceCollectionTestCase
         $this->assertInstanceOf('\Nexmo\Service\Account\Pricing', $this->account->pricing);
     }
 
-    public function testInvalidProperty()
-    {
-        $this->setExpectedException('\Nexmo\Exception', 'Class \Nexmo\Service\Account\Foo is not a Nexmo Resource');
-        $this->account->foo;
-    }
-
     public function testBalance()
     {
         $this->account->balance();
