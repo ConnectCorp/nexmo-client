@@ -2,6 +2,7 @@
 
 namespace Nexmo\Service\Account;
 
+use Nexmo\Entity\MatchingStrategy;
 use Nexmo\Entity\NumberCollection;
 use Nexmo\Exception;
 use Nexmo\Service\Service;
@@ -13,7 +14,7 @@ class Numbers extends Service
         return 'account/numbers';
     }
 
-    public function invoke($index = 1, $size = 10, $pattern = null, $searchPattern = 0)
+    public function invoke($index = 1, $size = 10, $pattern = null, $searchPattern = MatchingStrategy::STARTS_WITH)
     {
         $size = min($size, 100);
         return new NumberCollection($this->exec([

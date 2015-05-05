@@ -3,6 +3,7 @@
 namespace Nexmo\Service;
 
 use Nexmo\Entity;
+use Nexmo\Entity\MatchingStrategy;
 use Nexmo\Exception;
 
 /**
@@ -45,7 +46,7 @@ class Account extends ResourceCollection
      * @return Entity\NumberCollection|Entity\Number[]
      * @throws Exception
      */
-    public function numbers($index = 1, $size = 10, $pattern = null, $searchPattern = 0)
+    public function numbers($index = 1, $size = 10, $pattern = null, $searchPattern = MatchingStrategy::STARTS_WITH)
     {
         return $this->numbers->invoke($index, $size, $pattern, $searchPattern);
     }
