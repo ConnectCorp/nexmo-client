@@ -3,9 +3,9 @@ namespace Nexmo\Tests\Service\Account;
 
 use Nexmo\Service\Account\Pricing;
 use Nexmo\Tests\Service\ResourceCollectionMockTrait;
-use Nexmo\Tests\TestCase;
+use Nexmo\Tests\Service\ResourceCollectionTestCase;
 
-class PricingTest extends TestCase
+class PricingTest extends ResourceCollectionTestCase
 {
     /**
      * @var PricingMock
@@ -14,8 +14,13 @@ class PricingTest extends TestCase
 
     protected function setUp()
     {
-        $this->pricing = new PricingMock();
-        $this->pricing->setClient($this->guzzle());
+        parent::setUp();
+        $this->pricing = $this->service();
+    }
+
+    protected function createService()
+    {
+        return new PricingMock();
     }
 
     public function testProperties()
@@ -47,11 +52,6 @@ class PricingTest extends TestCase
     {
         $this->pricing->voice(1234567890);
         $this->assertResourceInitialized('phone');
-    }
-
-    protected function assertResourceInitialized($resource)
-    {
-        $this->assertTrue($this->pricing->isResourceInitialized($resource), $resource . ' has not been initialized');
     }
 }
 
