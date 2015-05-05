@@ -40,9 +40,9 @@ class Client extends ResourceCollection
         $this->apiSecret = $apiSecret;
     }
 
-    protected function getNamespaceSuffix()
+    protected function getNamespace()
     {
-        return 'Service';
+        return 'Nexmo\Service';
     }
 
     public function __get($name)

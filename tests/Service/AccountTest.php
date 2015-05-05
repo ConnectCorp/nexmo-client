@@ -50,25 +50,5 @@ class AccountTest extends TestCase
 
 class AccountMock extends Account
 {
-    protected $generator;
-
-    public function __construct()
-    {
-        $this->generator = new \PHPUnit_Framework_MockObject_Generator;
-    }
-
-    public function getNamespace()
-    {
-        return '\\Nexmo\\Service\\' . $this->getNamespaceSuffix();
-    }
-
-    protected function initializeClass($class)
-    {
-        return $this->generator->getMock($class);
-    }
-
-    public function isResourceInitialized($resource)
-    {
-        return isset($this->resources[$resource]);
-    }
+    use ResourceCollectionMockTrait;
 }

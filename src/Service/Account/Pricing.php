@@ -15,11 +15,6 @@ use Nexmo\Service\ResourceCollection;
  */
 class Pricing extends ResourceCollection
 {
-    protected function getNamespaceSuffix()
-    {
-        return 'Pricing';
-    }
-
     /**
      * Retrieve Nexmo's outbound pricing for a given country.
      *

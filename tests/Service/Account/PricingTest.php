@@ -2,6 +2,7 @@
 namespace Nexmo\Tests\Service\Account;
 
 use Nexmo\Service\Account\Pricing;
+use Nexmo\Tests\Service\ResourceCollectionMockTrait;
 use Nexmo\Tests\TestCase;
 
 class PricingTest extends TestCase
@@ -56,25 +57,5 @@ class PricingTest extends TestCase
 
 class PricingMock extends Pricing
 {
-    protected $generator;
-
-    public function __construct()
-    {
-        $this->generator = new \PHPUnit_Framework_MockObject_Generator;
-    }
-
-    public function getNamespace()
-    {
-        return '\\Nexmo\\Service\\Account\\' . $this->getNamespaceSuffix();
-    }
-
-    protected function initializeClass($class)
-    {
-        return $this->generator->getMock($class);
-    }
-
-    public function isResourceInitialized($resource)
-    {
-        return isset($this->resources[$resource]);
-    }
+    use ResourceCollectionMockTrait;
 }

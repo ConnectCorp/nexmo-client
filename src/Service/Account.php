@@ -15,11 +15,6 @@ use Nexmo\Exception;
  */
 class Account extends ResourceCollection
 {
-    protected function getNamespaceSuffix()
-    {
-        return 'Account';
-    }
-
     /**
      * Returns the balance in euros
      *
