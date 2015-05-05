@@ -1,4 +1,5 @@
 <?php
+
 namespace Nexmo\Tests\Service\Account;
 
 use Nexmo\Tests\TestCase;

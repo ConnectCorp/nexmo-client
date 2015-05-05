@@ -1,4 +1,5 @@
 <?php
+
 namespace Nexmo\Tests\Service\Account\Pricing;
 
 use Nexmo\Service\Account\Pricing\Phone;

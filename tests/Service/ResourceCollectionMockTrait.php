@@ -1,4 +1,5 @@
 <?php
+
 namespace Nexmo\Tests\Service;
 
 trait ResourceCollectionMockTrait

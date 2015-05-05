@@ -1,4 +1,5 @@
 <?php
+
 namespace Nexmo\Tests\Entity;
 
 use Nexmo\Entity\NumberCollection;
