@@ -1,7 +1,5 @@
 {
-  "name"       : "connect-corp/nexmo-client",
-  "version"    : "0.0.7",
-  "homepage" : "https://github.com/ConnectCorp/nexmo-client",
+  "name"       : "gmo/nexmo-client",
   "description": "Unofficial Nexmo Rest Client",
   "keywords"   : [
     "nexmo",
