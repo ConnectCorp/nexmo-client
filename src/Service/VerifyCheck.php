@@ -16,7 +16,7 @@ class VerifyCheck extends Service
      */
     public function getEndpoint()
     {
-        return 'verify/check/json';
+        return 'https://api.nexmo.com/verify/check/json';
     }
 
     /**

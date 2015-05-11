@@ -32,7 +32,7 @@ class Verify extends Service
      */
     public function getEndpoint()
     {
-        return 'verify/json';
+        return 'https://api.nexmo.com/verify/json';
     }
 
     /**
