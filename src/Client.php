@@ -18,7 +18,7 @@ use Nexmo\Service\ResourceCollection;
  */
 class Client extends ResourceCollection
 {
-    const BASE_URL = 'https://api.nexmo.com/';
+    const BASE_URL = 'https://rest.nexmo.com/';
 
     /**
      * @var string
