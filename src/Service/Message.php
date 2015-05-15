@@ -83,6 +83,10 @@ class Message extends Service
             throw new Exception("\$text parameter cannot be blank");
         }
 
+        if ($type === 'text' && $this->containsUnicode($text)) {
+            $type = 'unicode';
+        }
+
         return $this->exec([
             'from' => $from,
             'to' => $to,
@@ -98,6 +102,11 @@ class Message extends Service
             'body' => $body,
             'udh' => $udh
         ]);
+    }
+
+    protected function containsUnicode($text)
+    {
+        return max(array_map('ord', str_split($text))) > 127;
     }
 
     /**
