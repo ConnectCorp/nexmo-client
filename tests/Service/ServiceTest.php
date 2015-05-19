@@ -1,20 +1,50 @@
 <?php
 
-class ServiceTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests\Service;
+
+use GuzzleHttp as Guzzle;
+use Nexmo\Service\Service;
+use Nexmo\Tests\TestCase;
+
+class ServiceTest extends TestCase
 {
+    /**
+     * @var ServiceMock
+     */
+    protected $service;
+
+    /**
+     * @var Guzzle\ClientInterface
+     */
+    protected $client;
+    /**
+     * @var Guzzle\Subscriber\Mock
+     */
+    protected $mock;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $this->client = new Guzzle\Client();
+        $this->mock = new Guzzle\Subscriber\Mock();
+        $this->client->getEmitter()->attach($this->mock);
+        $this->service = new ServiceMock();
+        $this->service->setClient($this->client);
+    }
+
+    protected function addResponse($json)
+    {
+        $response = new Guzzle\Message\Response(200, [], Guzzle\Stream\Stream::factory($json));
+        $this->mock->addResponse($response);
+    }
 
     public function testInvoke()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-
-        $response = $this->getMockBuilder('\GuzzleHttp\Message\Response')->disableOriginalConstructor()->getMock();
-
-        $body = [
+        $expected = [
             'status' => 1,
-            'error_text' => 'Error'
+            'error_text' => 'Error',
         ];
-
-        $response->method('getBody')->willReturn(json_encode($body));
+        $this->addResponse(json_encode($expected));
 
         $params = [
             'param1' => 'value1',
@@ -22,85 +52,38 @@ class ServiceTest extends PHPUnit_Framework_TestCase
             'param3' => 'value3'
         ];
 
-        $client->expects($this->once())->method('get')->with(
-            'path',
-            [
-                'query' => $params
-            ]
-        )->willReturn($response);
-
-
-        $service = $this->getMockBuilder('ServiceMock')->setMethods(['validateResponse'])->setConstructorArgs([
-            $client
-        ])->getMock();
-
-        $service->expects($this->once())->method('validateResponse')->with($body);
-
-        $this->assertEquals($body, $service->testExec($params));
+        $this->assertEquals($expected, $this->service->testExec($params));
+        $this->assertTrue($this->service->responseValidated);
     }
 
     public function testInvokeJsonException()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
+        $this->addResponse('nonjsonstring');
 
-        $response = $this->getMockBuilder('\GuzzleHttp\Message\Response')->disableOriginalConstructor()->getMock();
+        $this->setExpectedException('\Nexmo\Exception', 'Unable to parse JSON data: JSON_ERROR_SYNTAX - Syntax error, malformed JSON');
 
-        $body = 'nonjsonstring';
-
-        $response->method('getBody')->willReturn($body);
-
-        $client->method('get')->willReturn($response);
-
-        $service = $this->getMockBuilder('ServiceMock')->setMethods(['validateResponse'])->setConstructorArgs([
-            $client
-        ])->getMock();
-
-        $this->setExpectedException('\Nexmo\Exception', 'Unable to parse JSON');
-
-        $service->testExec([]);
+        $this->service->testExec([]);
     }
 
     public function testCallable()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-
-        $service = $this->getMockBuilder('ServiceMock')->setMethods(['invoke'])->setConstructorArgs([
-            $client
-        ])->getMock();
-
-        $params = 'a';
-
-        $service->expects($this->once())->method('invoke')->with($params);
-
-        $service($params);
-    }
-
-
-    public function testConstructor()
-    {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-
-        $service = $this->getMockBuilder('ServiceMock')->setMethods(['invoke'])->setConstructorArgs([
-            $client
-        ])->getMock();
-
-        $this->assertEquals($service->getClient(), $client);
+        $service = $this->service;
+        $service('a');
+        $this->assertSame($this->service->invokedParams, ['a']);
     }
 }
 
-class ServiceMock extends \Nexmo\Service\Service
+class ServiceMock extends Service
 {
+    public $responseValidated = false;
+    public $invokedParams;
+
     /**
      * @return string
      */
     public function getEndpoint()
     {
         return 'path';
-    }
-
-    public function getClient()
-    {
-        return $this->client;
     }
 
     public function testExec(array $params)
@@ -113,7 +96,7 @@ class ServiceMock extends \Nexmo\Service\Service
      */
     public function invoke()
     {
-        // TODO: Implement invoke() method.
+        $this->invokedParams = func_get_args();
     }
 
     /**
@@ -122,7 +105,7 @@ class ServiceMock extends \Nexmo\Service\Service
      */
     protected function validateResponse(array $json)
     {
-        // TODO: Implement validateResponse() method.
+        $this->responseValidated = true;
+        return true;
     }
 }
- 

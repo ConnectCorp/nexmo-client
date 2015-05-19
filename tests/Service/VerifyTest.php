@@ -1,28 +1,34 @@
 <?php
 
-class VerifyTest extends PHPUnit_Framework_TestCase
+namespace Nexmo\Tests\Service;
+
+use Nexmo\Service\Verify;
+use Nexmo\Tests\TestCase;
+
+class VerifyTest extends TestCase
 {
+    /**
+     * @var VerifyMock
+     */
     private $service;
 
     protected function setUp()
     {
-        $client = $this->getMockBuilder('\GuzzleHttp\Client')->disableOriginalConstructor()->getMock();
-        $this->service = $this->getMockBuilder('VerifyMock')->setMethods(['exec'])->setConstructorArgs([$client])->getMock();
+        $this->service = new VerifyMock();
+        $this->service->setClient($this->guzzle());
     }
 
     public function testInvoke()
     {
-        $this->service->expects($this->once())->method('exec')->with(
-            [
-                'number' => 12345,
-                'brand' => 'brand',
-                'sender_id' => 'id',
-                'code_length' => 4,
-                'lg' => 'lg',
-                'require_type' => 'type'
-            ]);
-
         $this->service->invoke(12345, 'brand', 'id', 4, 'lg', 'type');
+        $this->assertSame($this->service->executedParams, [
+            'number' => 12345,
+            'brand' => 'brand',
+            'sender_id' => 'id',
+            'code_length' => 4,
+            'lg' => 'lg',
+            'require_type' => 'type'
+        ]);
     }
 
     public function testCheck()
@@ -36,13 +42,11 @@ class VerifyTest extends PHPUnit_Framework_TestCase
         $this->service->invoke();
     }
 
-
     public function testBrandParameterRequired()
     {
         $this->setExpectedException('\Nexmo\Exception', '$brand parameter cannot be blank');
         $this->service->invoke(5005550000);
     }
-
 
     public function testGetEndpoint()
     {
@@ -63,14 +67,12 @@ class VerifyTest extends PHPUnit_Framework_TestCase
         $this->service->testValidateResponse(['status' => 1]);
     }
 
-
     public function testValidateResponseErrorText()
     {
         $this->setExpectedException('\Nexmo\Exception', 'Unable to verify number: error - status 2');
 
         $this->service->testValidateResponse(['status' => 2, 'error_text' => 'error']);
     }
-
 
     public function testValidateResponseRequestIdRequired()
     {
@@ -85,11 +87,7 @@ class VerifyTest extends PHPUnit_Framework_TestCase
     }
 }
 
-class VerifyMock extends \Nexmo\Service\Verify
+class VerifyMock extends Verify
 {
-    public function testValidateResponse($params)
-    {
-        return $this->validateResponse($params);
-    }
+    use TestServiceTrait;
 }
- 
