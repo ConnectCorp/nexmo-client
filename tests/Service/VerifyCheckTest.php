@@ -30,7 +30,7 @@ class VerifyCheckTest extends TestCase
 
     public function testGetEndpoint()
     {
-        $this->assertEquals($this->service->getEndpoint(), 'verify/check/json');
+        $this->assertEquals($this->service->getEndpoint(), 'https://api.nexmo.com/verify/check/json');
     }
 
     public function testRequestIdParameterRequired()
