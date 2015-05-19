@@ -1,6 +1,5 @@
 {
   "name"       : "connect-corp/nexmo-client",
-  "version"    : "0.1.0",
   "homepage" : "https://github.com/ConnectCorp/nexmo-client",
   "description": "Unofficial Nexmo Rest Client",
   "keywords"   : [
@@ -25,6 +24,11 @@
   "autoload-dev": {
     "psr-4": {
       "Nexmo\\Tests\\": "tests/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
     }
   }
 }
