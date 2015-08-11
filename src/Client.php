@@ -9,10 +9,11 @@ use Nexmo\Service\ResourceCollection;
 /**
  * Class Client
  *
- * @property-read Service\Account $account Account management APIs
- * @property-read Service\Message $message
- * @property-read Service\Voice   $voice
- * @property-read Service\Verify  $verify
+ * @property-read Service\Account           $account                Account management APIs
+ * @property-read Service\MarketingMessage  $marketingmessage
+ * @property-read Service\Message           $message
+ * @property-read Service\Voice             $voice
+ * @property-read Service\Verify            $verify
  *
  * @package Nexmo\Client
  */
