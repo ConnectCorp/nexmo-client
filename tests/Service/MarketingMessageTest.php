@@ -1,10 +1,6 @@
 <?php
 namespace Nexmo\Tests\Service;
 
-require '../../src/Service/MarketingMessage.php';
-require '../TestCase.php';
-require 'TestServiceTrait.php';
-
 use Nexmo\Service\MarketingMessage;
 use Nexmo\Tests\TestCase;
 
