@@ -81,7 +81,7 @@ class MarketingMessageTest extends TestCase
         $this->assertTrue($this->service->testValidateResponse(['message-count' => 1, 'messages' => [['status' => 0]]]));
     }
 }
-class MarketingMessageMock extends \Nexmo\Service\MarketingMessage
+class MarketingMessageMock extends MarketingMessage
 {
     use TestServiceTrait;
 }
