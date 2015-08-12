@@ -1,7 +1,9 @@
 <?php
 
 namespace Nexmo\Service;
-use Symfony\Component\Config\Definition\Exception\Exception;
+
+use Nexmo\Exception as NexmoException;
+use Nexmo\Exception;
 
 /**
  * Class MarketingMessage
@@ -57,24 +59,24 @@ class MarketingMessage extends Service
     protected function validateResponse(array $json)
     {
         if (!isset($json['message-count'])) {
-            throw new Exception('message-count property expected');
+            throw new NexmoException('message-count property expected');
         }
 
         if (!isset($json['messages'])) {
-            throw new Exception('messages property expected');
+            throw new NexmoException('messages property expected');
         }
 
         foreach ($json['messages'] as $message) {
             if (!isset($message['status'])) {
-                throw new Exception('status property expected');
+                throw new NexmoException('status property expected');
             }
 
             if (!empty($message["error-text"])) {
-                throw new Exception("Unable to send sms message: " . $message["error-text"] . ' - status ' . $message['status']);
+                throw new NexmoException("Unable to send sms message: " . $message["error-text"] . ' - status ' . $message['status']);
             }
 
             if ($message['status'] > 0) {
-                throw new Exception("Unable to send sms message: status " . $message['status']);
+                throw new NexmoException("Unable to send sms message: status " . $message['status']);
             }
         }
 
