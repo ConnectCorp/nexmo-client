@@ -14,7 +14,6 @@ class ClientTest extends TestCase
 
     public function testConstructor()
     {
-        $this->assertInstanceOf('\Nexmo\Service\MarketingMessage', $this->client->marketingmessage);
         $this->assertInstanceOf('\Nexmo\Service\Message', $this->client->message);
         $this->assertInstanceOf('\Nexmo\Service\Verify', $this->client->verify);
         $this->assertInstanceOf('\Nexmo\Service\voice', $this->client->voice);
