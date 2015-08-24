@@ -5,3 +5,5 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
 [Nexmo API Documentation](https://docs.nexmo.com/) 
 ## How to Install
 ```composer require connect-corp/nexmo-client```
+## Contributors
+- @CarsonF

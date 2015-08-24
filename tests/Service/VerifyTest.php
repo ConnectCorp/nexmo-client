@@ -50,7 +50,7 @@ class VerifyTest extends TestCase
 
     public function testGetEndpoint()
     {
-        $this->assertEquals($this->service->getEndpoint(), 'verify/json');
+        $this->assertEquals($this->service->getEndpoint(), 'https://api.nexmo.com/verify/json');
     }
 
     public function testValidateResponseStatusProperty()
