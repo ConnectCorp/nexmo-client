@@ -129,12 +129,12 @@ class Message extends Service
                 throw new NexmoException('status property expected');
             }
 
-            if (!empty($message["error-text"])) {
-                throw new NexmoException("Unable to send sms message: " . $message["error-text"] . ' - status ' . $message['status']);
+            if (!empty($message['error-text'])) {
+                throw new Exception\MessageException($message['status'], $message['error-text']);
             }
 
             if ($message['status'] > 0) {
-                throw new NexmoException("Unable to send sms message: status " . $message['status']);
+                throw new Exception\MessageException($message['status'], 'Unknown');
             }
         }
 
