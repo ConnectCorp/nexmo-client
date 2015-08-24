@@ -37,9 +37,7 @@ class Message extends Service
      *                                    but is required when sending a Binary (binary),
      *                                    WAP Push (wappush), Unicode message (unicode), vcal (vcal) or vcard (vcard).
      * @param string     $text            Required when type='text'.
-     *                                    Body of the text message (with a maximum length of 3200 characters),
-     *                                    UTF-8 and URL encoded value.
-     *                                    Ex: "Déjà vu" content would be "D%c3%a9j%c3%a0+vu"
+     *                                    Body of the text message (with a maximum length of 3200 characters).
      * @param string     $statusReportReq Set to 1 if you want to receive a delivery report (DLR) for this request.
      *                                    Make sure to configure your "Callback URL" in your "API Settings"
      * @param string     $clientRef       Include any reference string for your reference.
@@ -83,7 +81,7 @@ class Message extends Service
             throw new Exception("\$text parameter cannot be blank");
         }
 
-        if ($type === 'text' && $this->containsUnicode($text)) {
+        if ($this->containsUnicode($text)) {
             $type = 'unicode';
         }
 
@@ -129,12 +127,12 @@ class Message extends Service
                 throw new NexmoException('status property expected');
             }
 
-            if (!empty($message["error-text"])) {
-                throw new NexmoException("Unable to send sms message: " . $message["error-text"] . ' - status ' . $message['status']);
+            if (!empty($message['error-text'])) {
+                throw new Exception\MessageException($message['status'], $message['error-text']);
             }
 
             if ($message['status'] > 0) {
-                throw new NexmoException("Unable to send sms message: status " . $message['status']);
+                throw new Exception\MessageException($message['status'], 'Unknown');
             }
         }
 
