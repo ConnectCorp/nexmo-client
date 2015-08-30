@@ -39,6 +39,7 @@ abstract class ResourceCollection extends Resource
             }
             $cls = $this->initializeClass($clsName);
             $cls->setClient($this->client);
+            $cls->rateLimitSubscriber = new \Nexmo\RateLimitSubscriber();
 
             $this->resources[$name] = $cls;
         }

@@ -12,6 +12,11 @@ use Nexmo\Exception;
 abstract class Service extends Resource
 {
     /**
+     * @return int
+     */
+    abstract public function getRateLimit();
+
+    /**
      * @return string
      */
     abstract public function getEndpoint();
@@ -36,9 +41,20 @@ abstract class Service extends Resource
     {
         $params = array_filter($params);
 
+        // Configure the RateLimitSubscriber for this request.
+        $this->rateLimitSubscriber->setRate($this->getRateLimit($params));
+        $this->rateLimitSubscriber->setKey(isset($params['from']) ? $params['from'] : '');
+
+        // Attach the RateLimitSubscriber with these settings.
+        $this->client->getEmitter()->attach($this->rateLimitSubscriber);
+
+        // Send the request using the specified method, endpoint and query params.
         $response = $this->client->send($this->client->createRequest($method, $this->getEndpoint(), [
             'query' => $params
         ]));
+
+        // Must remove the RateLimitSubscriber after each request.
+        $this->client->getEmitter()->detach($this->rateLimitSubscriber);
 
         try {
             $json = $response->json();

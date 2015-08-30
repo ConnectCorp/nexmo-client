@@ -11,6 +11,15 @@ use Nexmo\Exception;
 class Voice extends Service
 {
     /**
+     * @inheritdoc
+     */
+    public function getRateLimit()
+    {
+        // Max number of requests per second. Nexmo Voice API has a 30/sec rate limit.
+        return 30;
+    }
+
+    /**
      * @return string
      */
     public function getEndpoint()

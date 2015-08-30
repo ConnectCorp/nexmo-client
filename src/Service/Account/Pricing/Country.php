@@ -16,6 +16,15 @@ class Country extends Service
     /**
      * @inheritdoc
      */
+    public function getRateLimit()
+    {
+        // Max number of requests per second. Nexmo developer API permits 3/sec max.
+        return 2;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getEndpoint()
     {
         return 'account/get-pricing/outbound';
