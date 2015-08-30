@@ -18,26 +18,24 @@ use Nexmo\Service\ResourceCollection;
  */
 class Client extends ResourceCollection
 {
-    const BASE_URL = 'https://rest.nexmo.com/';
+    /**
+     * @var array
+     */
+    private $options = array(
+        'apiKey' => null,
+        'apiSecret' => null,
+        'baseURL' => 'https://rest.nexmo.com/',
+        'debug' => false,
+        'timeout' => 5.0,
+    );
 
     /**
-     * @var string
+     * @param array $options
      */
-    private $apiKey;
-
-    /**
-     * @var string
-     */
-    private $apiSecret;
-
-    /**
-     * @param string $apiKey
-     * @param string $apiSecret
-     */
-    public function __construct($apiKey, $apiSecret)
+    public function __construct(Array $options = [])
     {
-        $this->apiKey = $apiKey;
-        $this->apiSecret = $apiSecret;
+        // Override default options with options provided during instantiation.
+        $this->options = array_merge($this->options, $options);
     }
 
     protected function getNamespace()
@@ -57,11 +55,13 @@ class Client extends ResourceCollection
             return;
         }
         $this->client = new HttpClient([
-            'base_url' => static::BASE_URL,
+            'base_url' => $this->options['baseURL'],
             'defaults' => [
+                'timeout' => $this->options['timeout'],
+                'debug' => $this->options['debug'],
                 'query' => [
-                    'api_key' => $this->apiKey,
-                    'api_secret' => $this->apiSecret
+                    'api_key' => $this->options['apiKey'],
+                    'api_secret' => $this->options['apiSecret']
                 ]
             ]
         ]);
