@@ -17,6 +17,15 @@ class Numbers extends Service
     /**
      * @inheritdoc
      */
+    public function getRateLimit()
+    {
+        // Max number of requests per second. Nexmo developer API claims 3/sec max, but actually more than 2/sec causes error 429 Too Many Requests.
+        return 2;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getEndpoint()
     {
         return 'account/numbers';
@@ -51,6 +60,10 @@ class Numbers extends Service
         if (!isset($json['count'])) {
             throw new Exception('count property expected');
         }
+        if (0 == $json['count']) {
+            // If there are no numbers on the account, stop validating.
+            return;
+        }
         if (!isset($json['numbers']) || !is_array($json['numbers'])) {
             throw new Exception('numbers array property expected');
         }
@@ -66,9 +79,6 @@ class Numbers extends Service
             }
             if (!isset($number['features']) || !is_array($number['features'])) {
                 throw new Exception('number.features array property expected');
-            }
-            if (!isset($number['moHttpUrl'])) {
-                throw new Exception('number.moHttpUrl property expected');
             }
         }
     }
