@@ -12,6 +12,20 @@ use Nexmo\Exception;
 class Message extends Service
 {
     /**
+     * @inheritdoc
+     */
+    public function getRateLimit($params = null)
+    {
+        if (preg_match('/^1\d{10}$/', $params['from']) && preg_match('/^1\d{10}$/', $params['to'])) {
+            // SMS from US/Canadian LVN to US/Canadian recipient has a 1/sec rate limit.
+            // https://help.nexmo.com/hc/en-us/articles/203993598
+            return 1;
+        }
+        // For all others, Nexmo Voice API has a 30/sec rate limit.
+        return 30;
+    }
+
+    /**
      * @return string
      */
     public function getEndpoint()

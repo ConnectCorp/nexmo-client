@@ -17,6 +17,15 @@ class Numbers extends Service
     /**
      * @inheritdoc
      */
+    public function getRateLimit()
+    {
+        // Max number of requests per second. Nexmo developer API claims 3/sec max, but actually more than 2/sec causes error 429 Too Many Requests.
+        return 2;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function getEndpoint()
     {
         return 'account/numbers';
