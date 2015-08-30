@@ -34,7 +34,8 @@ class Country extends Service
         }
 
         return new Entity\Pricing($this->exec([
-            'country' => $country,
+            // Nexmo API requires $country value to be uppercase.
+            'country' => strtoupper($country),
         ]));
     }
 
@@ -43,6 +44,10 @@ class Country extends Service
      */
     protected function validateResponse(array $json)
     {
+        if (!isset($json['mt'])) {
+            // Some countries don't have any values, e.g., BV.
+            return;
+        }
         if (!isset($json['country'])) {
             throw new Exception('country property expected');
         }
