@@ -12,6 +12,11 @@ use Nexmo\Exception;
 abstract class Service extends Resource
 {
     /**
+     * @return int
+     */
+    abstract public function getRateLimit();
+
+    /**
      * @return string
      */
     abstract public function getEndpoint();
@@ -32,13 +37,24 @@ abstract class Service extends Resource
      * @throws Exception
      * @return array
      */
-    protected function exec($params)
+    protected function exec($params, $method = 'GET')
     {
         $params = array_filter($params);
 
-        $response = $this->client->get($this->getEndpoint(), [
+        // Configure the RateLimitSubscriber for this request.
+        $this->rateLimitSubscriber->setRate($this->getRateLimit($params));
+        $this->rateLimitSubscriber->setKey(isset($params['from']) ? $params['from'] : '');
+
+        // Attach the RateLimitSubscriber with these settings.
+        $this->client->getEmitter()->attach($this->rateLimitSubscriber);
+
+        // Send the request using the specified method, endpoint and query params.
+        $response = $this->client->send($this->client->createRequest($method, $this->getEndpoint(), [
             'query' => $params
-        ]);
+        ]));
+
+        // Must remove the RateLimitSubscriber after each request.
+        $this->client->getEmitter()->detach($this->rateLimitSubscriber);
 
         try {
             $json = $response->json();
@@ -46,7 +62,10 @@ abstract class Service extends Resource
             throw new Exception($e->getMessage(), 0, $e);
         }
 
-        $this->validateResponse($json);
+        // Because validateResponse() expects an array, we can only do so if the response body is not empty (which in some cases is a valid response), otherwise $json will be null.
+        if (strlen($response->getBody()) > 0) {
+            $this->validateResponse($json);
+        }
 
         return $json;
     }
