@@ -77,15 +77,15 @@ class Verify extends Service
         }
 
         if (!empty($response['error_text'])) {
-            throw new Exception('Unable to verify number: ' . $response['error_text'] . ' - status ' . $response['status']);
+            throw new Exception('Unable to verify number: ' . $response['error_text'] . ' - status ' . $response['status'], $response['status']);
         }
 
         if ($response['status'] > 0) {
-            throw new Exception('Unable to verify number: status ' . $response['status']);
+            throw new Exception('Unable to verify number: status ' . $response['status'], $response['status']);
         }
 
         if (!isset($response['request_id'])) {
-            throw new Exception('request_id property expected');
+            throw new Exception('request_id property expected', $response['status']);
         }
 
         return true;
