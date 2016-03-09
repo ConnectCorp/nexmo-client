@@ -19,7 +19,7 @@ class BalanceTest extends AccountTestCase
 
     public function testInvoke()
     {
-        $this->addResponse([
+        $this->addJsonResponse([
             'value' => '0.05',
         ]);
         $this->assertSame(0.05, $this->service->invoke());
@@ -32,7 +32,7 @@ class BalanceTest extends AccountTestCase
 
     public function testValidateResponseStatusProperty()
     {
-        $this->addResponse([]);
+        $this->addJsonResponse([]);
         $this->setExpectedException('\Nexmo\Exception', 'value property expected');
         $this->service->invoke();
     }

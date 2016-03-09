@@ -20,7 +20,7 @@ class InternationalTest extends AccountTestCase
 
     public function testInvoke()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $this->service->invoke(1);
         $this->assertSame([
             'prefix' => 1,
@@ -35,7 +35,7 @@ class InternationalTest extends AccountTestCase
 
     public function testResponse()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $prices = $this->service->invoke(1);
         $this->assertCount(2, $prices);
         foreach ($prices as $price) {
@@ -64,7 +64,7 @@ class InternationalTest extends AccountTestCase
 
     protected function assertInvalidResponseException($response, $field)
     {
-        $this->addResponse($response);
+        $this->addJsonResponse($response);
         $this->setExpectedException('\Nexmo\Exception', $field . ' property expected');
         $this->service->invoke(1);
     }

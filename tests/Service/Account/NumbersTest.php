@@ -19,7 +19,7 @@ class NumbersTest extends AccountTestCase
 
     public function testInvoke()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $this->service->invoke(1, 10, 1234, 1);
         $this->assertSame([
             'index' => 1,
@@ -31,14 +31,14 @@ class NumbersTest extends AccountTestCase
 
     public function testMaxSize()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $this->service->invoke(1, 9000);
         $this->assertSame(100, $this->service->executedParams['size']);
     }
 
     public function testResponse()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $numbers = $this->service->invoke();
         $this->assertInstanceOf('\Nexmo\Entity\NumberCollection', $numbers);
         $this->assertCount(5, $numbers);
@@ -115,7 +115,7 @@ class NumbersTest extends AccountTestCase
 
     protected function assertInvalidResponseException($response, $field)
     {
-        $this->addResponse($response);
+        $this->addJsonResponse($response);
         $this->setExpectedException('\Nexmo\Exception', $field . ' property expected');
         $this->service->invoke();
     }

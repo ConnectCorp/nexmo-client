@@ -39,6 +39,7 @@ abstract class ResourceCollection extends Resource
             }
             $cls = $this->initializeClass($clsName);
             $cls->setClient($this->client);
+            $cls->setDefaultQuery($this->getDefaultQuery());
 
             $this->resources[$name] = $cls;
         }
