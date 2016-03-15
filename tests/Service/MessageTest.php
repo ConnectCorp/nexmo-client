@@ -85,7 +85,7 @@ class MessageTest extends TestCase
 
     public function testValidateResponseStatusNotZero()
     {
-        $this->setExpectedException('\Nexmo\Exception', 'Unable to send sms message: status 1');
+        $this->setExpectedException('\Nexmo\Exception', 'Unable to send sms message: Unknown - status code: 1');
 
         $this->service->testValidateResponse(['message-count' => 1, 'messages' => [['status' => 1]]]);
     }
@@ -93,7 +93,7 @@ class MessageTest extends TestCase
 
     public function testValidateResponseErrorText()
     {
-        $this->setExpectedException('\Nexmo\Exception', 'Unable to send sms message: error - status 2');
+        $this->setExpectedException('\Nexmo\Exception', 'Unable to send sms message: error - status code: 2');
 
         $this->service->testValidateResponse(['message-count' => 1, 'messages' => [['error-text' => 'error', 'status' => 2]]]);
     }
