@@ -100,7 +100,7 @@ class PhoneMock extends Phone
 {
     public $executedParams;
 
-    protected function exec($params)
+    protected function exec($params, $method = 'GET')
     {
         $this->executedParams = $params;
         return parent::exec($params);
