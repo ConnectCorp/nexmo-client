@@ -11,7 +11,7 @@ trait TestServiceTrait
         return $this->validateResponse($params);
     }
 
-    protected function exec($params)
+    protected function exec($params, $method = 'GET')
     {
         $this->executedParams = $params;
     }
