@@ -32,13 +32,13 @@ abstract class Service extends Resource
      * @throws Exception
      * @return array
      */
-    protected function exec($params)
+    protected function exec($params, $method = 'GET')
     {
         $params = array_filter($params);
 
-        $response = $this->client->get($this->getEndpoint(), [
+        $response = $this->client->send($this->client->createRequest($method, $this->getEndpoint(), [
             'query' => $params
-        ]);
+        ]));
 
         try {
             $json = $response->json();
@@ -46,7 +46,10 @@ abstract class Service extends Resource
             throw new Exception($e->getMessage(), 0, $e);
         }
 
-        $this->validateResponse($json);
+        // Because validateResponse() expects an array, we can only do so if the response body is not empty (which in some cases is a valid response), otherwise $json will be null.
+        if (strlen($response->getBody()) > 0) {
+            $this->validateResponse($json);
+        }
 
         return $json;
     }

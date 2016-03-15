@@ -55,11 +55,11 @@ class VerifyCheck extends Service
         }
 
         if (!empty($response['error_text'])) {
-            throw new Exception('Unable to verify number: ' . $response['error_text'] . ' - status ' . $response['status']);
+            throw new Exception('Unable to verify number: ' . $response['error_text'] . ' - status ' . $response['status'], $response['status']);
         }
 
         if ($response['status'] > 0) {
-            throw new Exception('Unable to verify number: status ' . $response['status']);
+            throw new Exception('Unable to verify number: status ' . $response['status'], $response['status']);
         }
 
         return true;
