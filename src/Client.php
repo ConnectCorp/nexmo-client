@@ -58,13 +58,18 @@ class Client extends ResourceCollection
             return;
         }
         $this->client = new HttpClient([
-            'base_url' => static::BASE_URL,
-            'defaults' => [
-                'query' => [
-                    'api_key' => $this->apiKey,
-                    'api_secret' => $this->apiSecret
-                ]
-            ]
+            'base_uri' => static::BASE_URL
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function getDefaultQuery()
+    {
+        return [
+            'api_key' => $this->apiKey,
+            'api_secret' => $this->apiSecret,
+        ];
     }
 }

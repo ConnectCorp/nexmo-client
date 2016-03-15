@@ -20,7 +20,7 @@ class PhoneTest extends AccountTestCase
 
     public function testInvokeSms()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $pricing = $this->service->invoke('sms', 1234567890);
         $this->assertSame([
             'phone' => 1234567890,
@@ -31,7 +31,7 @@ class PhoneTest extends AccountTestCase
 
     public function testInvokeVoice()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $pricing = $this->service->invoke('voice', 1234567890);
         $this->assertSame([
             'phone' => 1234567890,
@@ -81,7 +81,7 @@ class PhoneTest extends AccountTestCase
 
     protected function assertInvalidResponseException($response, $field)
     {
-        $this->addResponse($response);
+        $this->addJsonResponse($response);
         $this->setExpectedException('\Nexmo\Exception', $field . ' property expected');
         $this->service->invoke('sms', 124567890);
     }

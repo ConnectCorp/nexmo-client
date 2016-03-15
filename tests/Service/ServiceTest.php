@@ -13,29 +13,11 @@ class ServiceTest extends TestCase
      */
     protected $service;
 
-    /**
-     * @var Guzzle\ClientInterface
-     */
-    protected $client;
-    /**
-     * @var Guzzle\Subscriber\Mock
-     */
-    protected $mock;
-
     protected function setUp()
     {
         parent::setUp();
-        $this->client = new Guzzle\Client();
-        $this->mock = new Guzzle\Subscriber\Mock();
-        $this->client->getEmitter()->attach($this->mock);
         $this->service = new ServiceMock();
-        $this->service->setClient($this->client);
-    }
-
-    protected function addResponse($json)
-    {
-        $response = new Guzzle\Message\Response(200, [], Guzzle\Stream\Stream::factory($json));
-        $this->mock->addResponse($response);
+        $this->service->setClient($this->guzzle());
     }
 
     public function testInvoke()
@@ -44,7 +26,7 @@ class ServiceTest extends TestCase
             'status' => 1,
             'error_text' => 'Error',
         ];
-        $this->addResponse(json_encode($expected));
+        $this->addJsonResponse($expected);
 
         $params = [
             'param1' => 'value1',
@@ -60,7 +42,7 @@ class ServiceTest extends TestCase
     {
         $this->addResponse('nonjsonstring');
 
-        $this->setExpectedException('\Nexmo\Exception', 'Unable to parse JSON data: JSON_ERROR_SYNTAX - Syntax error, malformed JSON');
+        $this->setExpectedException('\Nexmo\Exception', null, 4);
 
         $this->service->testExec([]);
     }

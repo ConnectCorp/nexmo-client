@@ -20,7 +20,7 @@ class CountryTest extends AccountTestCase
 
     public function testInvoke()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $this->service->invoke('US');
         $this->assertSame([
             'country' => 'US',
@@ -35,7 +35,7 @@ class CountryTest extends AccountTestCase
 
     public function testResponse()
     {
-        $this->addResponse($this->validResponse());
+        $this->addJsonResponse($this->validResponse());
         $pricing = $this->service->invoke('US');
         $this->assertInstanceOf('\Nexmo\Entity\Pricing', $pricing);
     }
@@ -70,7 +70,7 @@ class CountryTest extends AccountTestCase
     {
         $response = $this->validResponse();
         unset($response['networks']);
-        $this->addResponse($response);
+        $this->addJsonResponse($response);
         $this->service->invoke('US');
     }
 
@@ -97,7 +97,7 @@ class CountryTest extends AccountTestCase
 
     protected function assertInvalidResponseException($response, $field)
     {
-        $this->addResponse($response);
+        $this->addJsonResponse($response);
         $this->setExpectedException('\Nexmo\Exception', $field . ' property expected');
         $this->service->invoke('US');
     }
