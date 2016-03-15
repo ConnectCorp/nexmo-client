@@ -4,12 +4,15 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
 ## Documentation
 [Nexmo API Documentation](https://docs.nexmo.com/) 
 ## How to Install
-```composer require connect-corp/nexmo-client```
+```bash
+$ composer require connect-corp/nexmo-client
+```
 
 ## Usage examples
 
 ### Setting up the client object
 
+```php
     $nexmo_client_options = array(
         'apiKey' => '…',
         'apiSecret' => '…',
@@ -17,9 +20,10 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
         'timeout' => 5.0,
     );
     $nexmo = new \Nexmo\Client($nexmo_client_options);
-
+```
+    
 ### Sending a message
-
+```php
 	$from = '1234567890';
 	$to = '15551232020';
 	$text = 'hello world';
@@ -41,18 +45,18 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
             break;
         }
     }
-
+```
 ### Getting account balance
-
+```php
 	try {
 	    $response = $nexmo->account->balance();
 	} catch (Exception $e) {
         die($e->getMessage());
 	}
 	echo "Account balance is $response";
-
+```
 ### Getting pricing by destination country
-
+```php
 	$country = 'US';
 	try {
         $response = $nexmo->account->pricing->country($country);
@@ -60,9 +64,9 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
         die($e->getMessage());
 	}
 	echo 'Price is ' . $response->price();
-
+```
 ### Getting pricing by recipient number
-
+```php
 	$number = '15551232020';
 	try {
 		// SMS pricing.
@@ -73,10 +77,9 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
         die($e->getMessage());
 	}
 	echo 'Price is ' . $response->price();
-
-
+```
 ### Search for long virtual numbers by country
-
+```php
 	$country = 'US';
 	try {
         $response = $nexmo->number->search($country);
@@ -89,9 +92,9 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
             printf("%d  \$%01.2f  %-10s  %-15s\n", $n['msisdn'], $n['cost'], $n['type'], join(',', $n['features']));
 		}
 	}
-
+```
 ### Buy a long virtual number
-
+```php
 	$country = 'US';
 	$msisdn = '1234567890'; // Number found using $nexmo->number->search()
 	try {
@@ -102,9 +105,9 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
 	if (200 == $response['error-code']) {
 		echo 'Number purchase success';
 	}
-
+```
 ### List long virtual numbers in your account
-
+```php
 	$country = 'US';
 	try {
         $response = $nexmo->account->numbers();
@@ -117,9 +120,9 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
             printf("%d  %-2s  %-10s  %-15s\n", $n['msisdn'], $n['country'], $n['type'], join(',', $n['features']));
 		}
 	}
-
+```
 ### Cancel a long virtual number
-
+```php
 	$country = 'US';
 	$msisdn = '1234567890'; // Number found using $nexmo->account->numbers()
 	try {
@@ -130,8 +133,6 @@ Unofficial [Nexmo](https://www.nexmo.com/) Rest Client
 	if (200 == $response['error-code']) {
 		echo 'Number cancel success';
 	}
-
+```
 ## Contributors
-- @CarsonF
-- @com
-
+https://github.com/ConnectCorp/nexmo-client/network/members
