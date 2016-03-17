@@ -93,7 +93,7 @@ class Message extends Service
             'text' => $text,
             'status-report-req' => $statusReportReq,
             'client-ref' => $clientRef,
-            'networ-code' => $networkCode,
+            'network-code' => $networkCode,
             'vcard' => $vcard,
             'vcal' => $vcal,
             'ttl' => $ttl,
