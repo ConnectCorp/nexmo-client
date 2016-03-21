@@ -91,13 +91,13 @@ class Message extends Service
             'to' => $to,
             'type' => $type,
             'text' => $text,
-            'status_report_req' => $statusReportReq,
-            'client_ref' => $clientRef,
-            'network_code' => $networkCode,
+            'status-report-req' => $statusReportReq,
+            'client-ref' => $clientRef,
+            'network-code' => $networkCode,
             'vcard' => $vcard,
             'vcal' => $vcal,
             'ttl' => $ttl,
-            'message_class' => $messageClass,
+            'message-class' => $messageClass,
             'body' => $body,
             'udh' => $udh
         ]);

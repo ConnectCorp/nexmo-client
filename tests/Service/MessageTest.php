@@ -26,13 +26,13 @@ class MessageTest extends TestCase
             'to' => 5005551111,
             'type' => 'text',
             'text' => 'message',
-            'status_report_req' => 'status_rep_req',
-            'client_ref' => 'client_ref',
-            'network_code' => 'net_code',
+            'status-report-req' => 'status_rep_req',
+            'client-ref' => 'client_ref',
+            'network-code' => 'net_code',
             'vcard' => 'vcard',
             'vcal' => 'vcal',
             'ttl' => 1,
-            'message_class' => 'class',
+            'message-class' => 'class',
             'body' => 'body',
             'udh' => 'udh'
         ]);
