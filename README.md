@@ -13,13 +13,9 @@ $ composer require connect-corp/nexmo-client
 ### Setting up the client object
 
 ```php
-    $nexmo_client_options = array(
-        'apiKey' => '…',
-        'apiSecret' => '…',
-        'debug' => false,
-        'timeout' => 5.0,
-    );
-    $nexmo = new \Nexmo\Client($nexmo_client_options);
+    $apiKey = 'api_key_from_nexmo_account';
+    $apiSecret = 'api_secret_from_nexmo_account';
+    $nexmo = new \Nexmo\Client($apiKey, $apiSecret);
 ```
     
 ### Sending a message
