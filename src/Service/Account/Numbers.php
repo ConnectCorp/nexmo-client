@@ -51,6 +51,10 @@ class Numbers extends Service
         if (!isset($json['count'])) {
             throw new Exception('count property expected');
         }
+        if (0 == $json['count']) {
+            // If there are no numbers on the account, stop validating.
+            return;
+        }
         if (!isset($json['numbers']) || !is_array($json['numbers'])) {
             throw new Exception('numbers array property expected');
         }
@@ -66,9 +70,6 @@ class Numbers extends Service
             }
             if (!isset($number['features']) || !is_array($number['features'])) {
                 throw new Exception('number.features array property expected');
-            }
-            if (!isset($number['moHttpUrl'])) {
-                throw new Exception('number.moHttpUrl property expected');
             }
         }
     }
