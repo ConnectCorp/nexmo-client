@@ -13,7 +13,6 @@ class RateLimitSubscriber implements SubscriberInterface
      * (or better, send from each LVN in parallel, concurrent threads).
      */
     private static $time = [];
-    private static $counter = [];
 
     /**
      * @param float $max_requests_per_sec
@@ -60,7 +59,6 @@ class RateLimitSubscriber implements SubscriberInterface
     public function onBefore(BeforeEvent $event)
     {
         self::$time[$this->timeKey] = microtime(true);
-        self::$counter[$this->timeKey] = isset(self::$counter[$this->timeKey]) ? self::$counter[$this->timeKey] + 1 : 1;
     }
 
     /**
